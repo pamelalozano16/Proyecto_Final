@@ -8,8 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.foregroundFPS = 60;
-		config.height = 900;
-		config.width = 1400;
+		config.height = ContagionGame.HEIGHT;
+		config.width = ContagionGame.WIDTH;
 		config.resizable = false;
 		new LwjglApplication(new ContagionGame(), config);
 	}
