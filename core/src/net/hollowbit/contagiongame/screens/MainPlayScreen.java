@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.ContagionGame;
 
 public class MainPlayScreen implements Screen {
@@ -15,14 +17,20 @@ public class MainPlayScreen implements Screen {
 	private static final int PLAY_BTN_Y = 50;
 	private static final int LOGO_WIDTH = 400;
 	private static final int LOGO_HEIGHT = 300;
+	private static final int VIRUS_WIDTH=60;
+	private static final int VIRUS_HEIGHT=73;
+	private static final float VIRUS_SPEED=0.5f;
 
 	ContagionGame game;
 
 	Texture logo;
+	TextureRegion[] virus;
+	Animation<TextureRegion> virusAnimation;
 	Texture playButtonActive;
 	Texture playButtonInactive;
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
+    float stateTime;
 
 	public MainPlayScreen(ContagionGame game) {
 		this.game = game;
@@ -31,6 +39,21 @@ public class MainPlayScreen implements Screen {
         backgroundTexture = new Texture("background.jpg");
         backgroundSprite =new Sprite(backgroundTexture);
 		logo = new Texture("contagion.png");
+	}
+	
+	private void assignAnimations() {
+		int column=6;
+		int row=1;
+		Texture virusT= new Texture("virus.png");
+		TextureRegion[][] tmp = TextureRegion.split(virusT, virusT.getWidth()/6, virusT.getHeight());
+		virus = new TextureRegion[6*1];
+		int index = 0;
+		for(int i=0;i<row;i++) {
+			for(int j=0;j<column;j++) {
+				virus[index++]= tmp[i][j];
+			}
+		}
+		virusAnimation = new Animation<TextureRegion>(VIRUS_SPEED, virus);
 	}
 
 	@Override
@@ -46,6 +69,9 @@ public class MainPlayScreen implements Screen {
     
 	@Override
 	public void render(float delta) {
+		
+		stateTime+=delta;
+		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -76,6 +102,14 @@ public class MainPlayScreen implements Screen {
 			// No Collision 
 			game.batch.draw(playButtonInactive, PLAY_BTN_X, PLAY_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT);
 		}
+		
+		//Animation
+		assignAnimations();
+		TextureRegion currentFrame = virusAnimation.getKeyFrame(stateTime, true);
+		game.batch.draw(currentFrame, 50,400);
+		game.batch.draw(currentFrame, 400,250);
+		game.batch.draw(currentFrame, 600,500);
+		game.batch.draw(currentFrame, 900,300);
 
 		game.batch.end();
 	}
