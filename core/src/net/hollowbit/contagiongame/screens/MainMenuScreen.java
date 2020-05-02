@@ -15,9 +15,9 @@ public class MainMenuScreen implements Screen {
 	private static final int BTN_HEIGHT = 123;
 	private static final int BTN_WIDTH = 267;
 	private static final int BTN_X = (ContagionGame.WIDTH / 2) - (BTN_WIDTH / 2);
-	private static final int OPTION_BTN_Y = 50;
-	private static final int NEW_BTN_Y = 175;
-	private static final int RESUME_BTN_Y = 300;
+	private static final int OPTION_BTN_Y = 100;
+	private static final int NEW_BTN_Y = 225;
+	private static final int RESUME_BTN_Y = 350;
 	private static final int LOGO_WIDTH = 400;
 	private static final int LOGO_HEIGHT = 300;
 	private static final int VIRUS_WIDTH=60;
@@ -39,6 +39,7 @@ public class MainMenuScreen implements Screen {
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
     float stateTime;
+
 
 	public MainMenuScreen(ContagionGame game) {
 		this.game = game;
@@ -112,7 +113,7 @@ public class MainMenuScreen implements Screen {
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new MainMenuScreen(game));//Changes to main menu screen
+				game.setScreen(new MainGameScreen(game));//Changes to main menu screen
 			}
 			
 		} else {
@@ -120,8 +121,8 @@ public class MainMenuScreen implements Screen {
 			game.batch.draw(resumeButtonInactive, BTN_X, RESUME_BTN_Y, BTN_WIDTH, BTN_HEIGHT);
 		}
 		
-		// New game button
 		
+		// New game button
 		if (BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (BTN_X + BTN_WIDTH)
 				&& Gdx.input.getY() <= (game.HEIGHT - NEW_BTN_Y)
 				&& (game.HEIGHT - NEW_BTN_Y - BTN_HEIGHT < Gdx.input.getY())) {
@@ -130,7 +131,7 @@ public class MainMenuScreen implements Screen {
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new MainMenuScreen(game));//Changes to main menu screen
+				game.setScreen(new MainGameScreen(game));//Changes to main menu screen
 			}
 			
 		} else {
@@ -148,7 +149,7 @@ public class MainMenuScreen implements Screen {
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new MainMenuScreen(game));//Changes to main menu screen
+				//game.setScreen(new MainMenuScreen(game));//Changes to main menu screen
 			}
 			
 		} else {
@@ -159,6 +160,7 @@ public class MainMenuScreen implements Screen {
 		//Animation
 		assignAnimations();
 		TextureRegion currentFrame = virusAnimation.getKeyFrame(stateTime, true);
+
 		game.batch.draw(currentFrame, 50,400);
 		game.batch.draw(currentFrame, 400,250);
 		game.batch.draw(currentFrame, 600,500);
