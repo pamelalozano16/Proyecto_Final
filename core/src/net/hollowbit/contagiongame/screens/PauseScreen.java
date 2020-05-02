@@ -13,6 +13,8 @@ import com.mygdx.game.ContagionGame;
 
 public class PauseScreen implements Screen {
 
+	private static final int diff=120;
+	
 	private static final int MENU_WIDTH = 400;
 	private static final int MENU_HEIGHT = 500;
 	private static final int MENU_X= (ContagionGame.WIDTH/2)-(MENU_WIDTH/2);
@@ -20,8 +22,10 @@ public class PauseScreen implements Screen {
 	private static final int BTN_HEIGHT = 123;
 	private static final int BTN_WIDTH = 267;
 	private static final int BTN_X = MENU_X+45;
-	private static final int SAVE_BTN_Y =ContagionGame.HEIGHT-MENU_Y-BTN_HEIGHT;;
-	private static final int EXIT_BTN_Y =SAVE_BTN_Y-170;
+	private static final int RESUME_BTN_Y =ContagionGame.HEIGHT-MENU_Y-BTN_HEIGHT;
+	private static final int SAVE_BTN_Y =RESUME_BTN_Y-diff;
+	private static final int OPTIONS_BTN_Y =SAVE_BTN_Y-diff;
+	private static final int EXIT_BTN_Y =OPTIONS_BTN_Y-diff;
 
 	ContagionGame game;
 
@@ -29,6 +33,10 @@ public class PauseScreen implements Screen {
 	Texture exitButtonInactive;
 	Texture saveButtonActive;
 	Texture saveButtonInactive;
+	Texture resumeButtonActive;
+	Texture resumeButtonInactive;
+	Texture optionsButtonActive;
+	Texture optionsButtonInactive;
 	Texture menuBackground;
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
@@ -41,6 +49,10 @@ public class PauseScreen implements Screen {
 		this.saveButtonInactive = new Texture("save_inactive.png");
 		this.exitButtonActive = new Texture("exit_active.png");
 		this.exitButtonInactive = new Texture("exit_inactive.png");
+		this.resumeButtonActive = new Texture("resume_active.png");
+		this.resumeButtonInactive = new Texture("resume_inactive.png");
+		this.optionsButtonActive = new Texture("options_active.png");
+		this.optionsButtonInactive = new Texture("options_inactive.png");
       // backgroundTexture = new Texture("cuarto2.png");
 		menuBackground = new Texture("menuBackground.png");
         backgroundTexture = new Texture("cuarto.png");
@@ -78,12 +90,29 @@ public class PauseScreen implements Screen {
 		 Gdx.input.getX() = mouse X coordinate
 		 Gdx.input.getY() = mouse Y coordinate
 */		
+
+		if (BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (BTN_X + BTN_WIDTH)
+				&& Gdx.input.getY() <= (game.HEIGHT - RESUME_BTN_Y)
+				&& (game.HEIGHT - RESUME_BTN_Y -BTN_HEIGHT < Gdx.input.getY())) {
+			// Collision mouse with Play Button for hover
+			game.batch.draw(resumeButtonActive, BTN_X + 50, RESUME_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
+			
+			//Collision mouse with Play Button for click
+			if(Gdx.input.isTouched()) { //If it clicks it
+				game.setScreen(new MainGameScreen(game));//Changes to main menu screen
+			}
+			
+		} else {
+			// No Collision 
+			game.batch.draw(resumeButtonInactive, BTN_X, RESUME_BTN_Y,BTN_WIDTH, BTN_HEIGHT);
+		} ;
+		
 		
 		if (BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (BTN_X + BTN_WIDTH)
 				&& Gdx.input.getY() <= (game.HEIGHT - SAVE_BTN_Y)
 				&& (game.HEIGHT - SAVE_BTN_Y -BTN_HEIGHT < Gdx.input.getY())) {
 			// Collision mouse with Play Button for hover
-			game.batch.draw(saveButtonActive, BTN_X + 30, SAVE_BTN_Y, BTN_WIDTH-30, BTN_HEIGHT);
+			game.batch.draw(saveButtonActive, BTN_X + 50, SAVE_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
@@ -93,6 +122,23 @@ public class PauseScreen implements Screen {
 		} else {
 			// No Collision 
 			game.batch.draw(saveButtonInactive, BTN_X, SAVE_BTN_Y,BTN_WIDTH, BTN_HEIGHT);
+		}; 
+		
+		
+		if (BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (BTN_X + BTN_WIDTH)
+				&& Gdx.input.getY() <= (game.HEIGHT - OPTIONS_BTN_Y)
+				&& (game.HEIGHT - OPTIONS_BTN_Y -BTN_HEIGHT < Gdx.input.getY())) {
+			// Collision mouse with Play Button for hover
+			game.batch.draw(optionsButtonActive, BTN_X + 50, OPTIONS_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
+			
+			//Collision mouse with Play Button for click
+			if(Gdx.input.isTouched()) { //If it clicks it
+				//game.setScreen(new PauseScreen(game));//Changes to main menu screen
+			}
+			
+		} else {
+			// No Collision 
+			game.batch.draw(optionsButtonInactive, BTN_X, OPTIONS_BTN_Y,BTN_WIDTH, BTN_HEIGHT);
 		} 
 		
 		
@@ -100,7 +146,7 @@ public class PauseScreen implements Screen {
 				&& Gdx.input.getY() <= (game.HEIGHT - EXIT_BTN_Y)
 				&& (game.HEIGHT - EXIT_BTN_Y -BTN_HEIGHT < Gdx.input.getY())) {
 			// Collision mouse with Play Button for hover
-			game.batch.draw(exitButtonActive, BTN_X + 30, EXIT_BTN_Y, BTN_WIDTH-30, BTN_HEIGHT);
+			game.batch.draw(exitButtonActive, BTN_X + 50, EXIT_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
