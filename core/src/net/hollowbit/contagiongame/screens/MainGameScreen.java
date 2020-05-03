@@ -15,19 +15,26 @@ public class MainGameScreen implements Screen {
 	private static final int PLAY_BTN_WIDTH = 134;
 	private static final int PLAY_BTN_X = 15;
 	private static final int PLAY_BTN_Y = ContagionGame.HEIGHT - 85;
+	private static final int GAMEO_BTN_X = 15;
+	private static final int GAMEO_BTN_Y =  PLAY_BTN_Y - PLAY_BTN_HEIGHT;
 
 	ContagionGame game;
 
 	Texture pauseButtonActive;
 	Texture pauseButtonInactive;
+	Texture gameOverButtonActive;
+	Texture gameOverButtonInactive;
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
     float stateTime;
+    
 
 	public MainGameScreen(ContagionGame game) {
 		this.game = game;
 		this.pauseButtonActive = new Texture("pause_active.png");
 		this.pauseButtonInactive = new Texture("pause_inactive.png");
+		this.gameOverButtonActive = new Texture("gameOver_active.png");
+		this.gameOverButtonInactive = new Texture("gameOver_inactive.png");
        // backgroundTexture = new Texture("cuarto2.png");
         backgroundTexture = new Texture("cuarto.png");
         backgroundSprite =new Sprite(backgroundTexture);
@@ -75,6 +82,23 @@ public class MainGameScreen implements Screen {
 		} else {
 			// No Collision 
 			game.batch.draw(pauseButtonInactive, PLAY_BTN_X, PLAY_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT);
+		}
+		
+		
+		if (GAMEO_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (GAMEO_BTN_X + PLAY_BTN_WIDTH)
+				&& Gdx.input.getY() <= (game.HEIGHT - GAMEO_BTN_Y)
+				&& (game.HEIGHT - GAMEO_BTN_Y - PLAY_BTN_HEIGHT < Gdx.input.getY())) {
+			// Collision mouse with Play Button for hover
+			game.batch.draw(gameOverButtonActive, GAMEO_BTN_X + 30, GAMEO_BTN_Y, PLAY_BTN_WIDTH-30, PLAY_BTN_HEIGHT);
+			
+			//Collision mouse with Play Button for click
+			if(Gdx.input.isTouched()) { //If it clicks it
+				game.setScreen(new GameOver(game));//Changes to main menu screen
+			}
+			
+		} else {
+			// No Collision 
+			game.batch.draw(gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT);
 		}
 		
 
