@@ -17,6 +17,10 @@ public class MainGameScreen implements Screen {
 	private static final int PLAY_BTN_Y = ContagionGame.HEIGHT - 85;
 	private static final int GAMEO_BTN_X = 15;
 	private static final int GAMEO_BTN_Y =  PLAY_BTN_Y - PLAY_BTN_HEIGHT;
+	private static final int DOOR_HEIGHT=300;
+	private static final int DOOR_WIDTH=150;
+	private static final int DOOR_X=ContagionGame.WIDTH-250;
+	private static final int DOOR_Y=200;
 
 	ContagionGame game;
 
@@ -24,6 +28,7 @@ public class MainGameScreen implements Screen {
 	Texture pauseButtonInactive;
 	Texture gameOverButtonActive;
 	Texture gameOverButtonInactive;
+	Texture door;
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
     float stateTime;
@@ -35,6 +40,7 @@ public class MainGameScreen implements Screen {
 		this.pauseButtonInactive = new Texture("pause_inactive.png");
 		this.gameOverButtonActive = new Texture("gameOver_active.png");
 		this.gameOverButtonInactive = new Texture("gameOver_inactive.png");
+		this.door=new Texture("door.png");
        // backgroundTexture = new Texture("cuarto2.png");
         backgroundTexture = new Texture("cuarto.png");
         backgroundSprite =new Sprite(backgroundTexture);
@@ -63,7 +69,7 @@ public class MainGameScreen implements Screen {
 		
 		renderBackground();
 		
-
+		game.batch.draw(door, DOOR_X, DOOR_Y, DOOR_WIDTH, DOOR_HEIGHT);
 		/* 
 		 Gdx.input.getX() = mouse X coordinate
 		 Gdx.input.getY() = mouse Y coordinate
