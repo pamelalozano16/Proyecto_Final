@@ -19,7 +19,7 @@ public class HallwayScreen implements Screen {
 
 	public HallwayScreen(ContagionGame game) {
 		this.game = game;
-        backgroundTexture = new Texture("cuarto.jpg");
+        backgroundTexture = new Texture("pasillo.jpg");
         backgroundSprite =new Sprite(backgroundTexture);
 	}
 	
@@ -29,7 +29,7 @@ public class HallwayScreen implements Screen {
 	}
 
     public void renderBackground() {
-    	backgroundSprite.setSize(game.WIDTH, game.HEIGHT);
+    	backgroundSprite.setSize(game.HEIGHT, game.HEIGHT);
     	backgroundSprite.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
         backgroundSprite.draw(game.batch);
     }
@@ -39,7 +39,7 @@ public class HallwayScreen implements Screen {
 		
 		stateTime+=delta;
 		
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.batch.begin();
