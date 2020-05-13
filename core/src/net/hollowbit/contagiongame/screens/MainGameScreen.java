@@ -84,7 +84,6 @@ public class MainGameScreen implements Screen {
 		backgroundSprite.draw(game.batch);
 	}
 
-
 	@Override
 	public void render(float delta) {
 
@@ -97,14 +96,19 @@ public class MainGameScreen implements Screen {
 
 		renderBackground();
 
+		// Se pinta la puerta como sprite
 		doorSprite.draw(game.batch);
 		doorSprite.setPosition(DOOR_X, DOOR_Y);
 		doorSprite.setSize(DOOR_WIDTH, DOOR_HEIGHT);
-		
-		imageCollision(DOOR_X, DOOR_Y, DOOR_WIDTH, DOOR_HEIGHT, new HallwayScreen(game));
-		buttonCollision(pauseButtonActive, pauseButtonInactive, PLAY_BTN_X, PLAY_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT, new PauseScreen(game));
-		buttonCollision(gameOverButtonActive, gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT, new GameOver(game));
 
+		// Detecta click con el mouse en la puerta
+		imageCollision(DOOR_X, DOOR_Y, DOOR_WIDTH, DOOR_HEIGHT, new HallwayScreen(game));
+
+		// Detecta la colision del mouse con los botones y el click
+		buttonCollision(pauseButtonActive, pauseButtonInactive, PLAY_BTN_X, PLAY_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT,
+				new PauseScreen(game));
+		buttonCollision(gameOverButtonActive, gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH,
+				PLAY_BTN_HEIGHT, new GameOver(game));
 
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);
@@ -128,12 +132,15 @@ public class MainGameScreen implements Screen {
 		}
 
 		// Animation
-		
+
+		// Se pinta la animación
 		game.batch.draw(currentFrame, PLAYER_X, PLAYER_Y, PLAYER_W, PLAYER_H);
+
+		// Rectangle del player para que pueda detectar la colision
 		Rectangle playerRect = new Rectangle(PLAYER_X, PLAYER_Y, PLAYER_W, PLAYER_H);
-		if(doorSprite.getBoundingRectangle().overlaps(playerRect)){
-				    // gives true when sprite 2 intersects sprite1
-			game.setScreen(new HallwayScreen(game));
+
+		if (doorSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
+			game.setScreen(new HallwayScreen(game)); // Va al pasillo
 		}
 		game.batch.end();
 	}
@@ -162,17 +169,16 @@ public class MainGameScreen implements Screen {
 	public void dispose() {
 
 	}
-	
 
 	public void assignPlayerAnimations() {
 		int column = 4;
 		int row = 1;
 		Texture playerT = new Texture("player.png");
 		TextureRegion[][] tmp = TextureRegion.split(playerT, playerT.getWidth() / column, playerT.getHeight() / 4);
-		int index=0;
-		
-		player = new TextureRegion[1*1];
-			player[index++] = tmp[0][0];
+		int index = 0;
+
+		player = new TextureRegion[1 * 1];
+		player[index++] = tmp[0][0];
 		playerStanding = new Animation<TextureRegion>(PLAYER_SPEED, player);
 
 		player = new TextureRegion[column * row];
@@ -181,22 +187,22 @@ public class MainGameScreen implements Screen {
 			player[index++] = tmp[0][j];
 		}
 		playerDown = new Animation<TextureRegion>(PLAYER_SPEED, player);
-		
-		index=0;
+
+		index = 0;
 		player = new TextureRegion[column * row];
 		for (int j = 0; j < column; j++) {
 			player[index++] = tmp[1][j];
 		}
 		playerUp = new Animation<TextureRegion>(PLAYER_SPEED, player);
 
-		index=0;
+		index = 0;
 		player = new TextureRegion[column * row];
 		for (int j = 0; j < column; j++) {
 			player[index++] = tmp[2][j];
 		}
 		playerLeft = new Animation<TextureRegion>(PLAYER_SPEED, player);
 
-		index=0;
+		index = 0;
 		player = new TextureRegion[column * row];
 		for (int j = 0; j < column; j++) {
 			player[index++] = tmp[3][j];
@@ -204,9 +210,9 @@ public class MainGameScreen implements Screen {
 		playerRight = new Animation<TextureRegion>(PLAYER_SPEED, player);
 
 	}
-	
-	public void buttonCollision(Texture gameOverButtonActive, Texture gameOverButtonInactive, 
-			int GAMEO_BTN_X, int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT, Screen newScreen) {
+
+	public void buttonCollision(Texture gameOverButtonActive, Texture gameOverButtonInactive, int GAMEO_BTN_X,
+			int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT, Screen newScreen) {
 
 		if (GAMEO_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (GAMEO_BTN_X + PLAY_BTN_WIDTH)
 				&& Gdx.input.getY() <= (game.HEIGHT - GAMEO_BTN_Y)
@@ -225,7 +231,6 @@ public class MainGameScreen implements Screen {
 		}
 
 	}
-	
 
 	void imageCollision(int GAMEO_BTN_X, int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT, Screen PauseScreen) {
 		if (GAMEO_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (GAMEO_BTN_X + PLAY_BTN_WIDTH)
@@ -242,6 +247,5 @@ public class MainGameScreen implements Screen {
 
 		}
 	}
-
 
 }
