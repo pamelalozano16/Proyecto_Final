@@ -35,8 +35,8 @@ public class MainGameScreen implements Screen {
 		this.pauseButtonInactive = new Texture("pause_inactive.png");
 		this.gameOverButtonActive = new Texture("gameOver_active.png");
 		this.gameOverButtonInactive = new Texture("gameOver_inactive.png");
-       // backgroundTexture = new Texture("cuarto2.png");
-        backgroundTexture = new Texture("cuarto.png");
+        backgroundTexture = new Texture("cuarto2.png");
+       // backgroundTexture = new Texture("cuarto.png");
         backgroundSprite =new Sprite(backgroundTexture);
 	}
 	
