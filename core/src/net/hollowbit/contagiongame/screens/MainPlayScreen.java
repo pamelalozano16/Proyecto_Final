@@ -46,7 +46,7 @@ public class MainPlayScreen implements Screen {
 		int row=1;
 		Texture virusT= new Texture("virus.png");
 		TextureRegion[][] tmp = TextureRegion.split(virusT, virusT.getWidth()/6, virusT.getHeight());
-		virus = new TextureRegion[6*1];
+		virus = new TextureRegion[column*row];
 		int index = 0;
 		for(int i=0;i<row;i++) {
 			for(int j=0;j<column;j++) {
