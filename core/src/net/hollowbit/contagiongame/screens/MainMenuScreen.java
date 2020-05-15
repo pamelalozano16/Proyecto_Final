@@ -131,7 +131,7 @@ public class MainMenuScreen implements Screen {
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new MainGameScreen(game));//Changes to main menu screen
+				game.setScreen(new StoreGame(game));//Changes to main menu screen
 			}
 			
 		} else {
