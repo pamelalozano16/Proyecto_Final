@@ -33,13 +33,17 @@ public class MainGameScreen implements Screen {
 
 	ContagionGame game;
 
-	ShapeRenderer shapeRenderer;
+	
+	//BOTONES
 	Texture pauseButtonActive;
 	Texture pauseButtonInactive;
 	Texture gameOverButtonActive;
 	Texture gameOverButtonInactive;
+	
+	//PUERTA
 	public static Texture door;
 	public static Sprite doorSprite;
+	
 	// PLAYER
 	TextureRegion[] player;
 	Animation<TextureRegion> playerStanding;
@@ -106,28 +110,28 @@ public class MainGameScreen implements Screen {
 
 		// Detecta la colision del mouse con los botones y el click
 		buttonCollision(pauseButtonActive, pauseButtonInactive, PLAY_BTN_X, PLAY_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT,
-				new PauseScreen(game));
+				new PauseScreen(game), 30, 30);
 		buttonCollision(gameOverButtonActive, gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH,
-				PLAY_BTN_HEIGHT, new GameOver(game));
+				PLAY_BTN_HEIGHT, new GameOver(game), 30, 30);
 
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);
 
 		// Walking
 		if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-			PLAYER_Y -= 7;
+			PLAYER_Y -= 10;
 			currentFrame = playerDown.getKeyFrame(stateTime, true);
 		}
 		if (Gdx.input.isKeyPressed(Keys.UP)) {
-			PLAYER_Y += 7;
+			PLAYER_Y += 10;
 			currentFrame = playerUp.getKeyFrame(stateTime, true);
 		}
 		if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-			PLAYER_X -= 7;
+			PLAYER_X -= 10;
 			currentFrame = playerLeft.getKeyFrame(stateTime, true);
 		}
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			PLAYER_X += 7;
+			PLAYER_X += 10;
 			currentFrame = playerRight.getKeyFrame(stateTime, true);
 		}
 
@@ -140,7 +144,7 @@ public class MainGameScreen implements Screen {
 		Rectangle playerRect = new Rectangle(PLAYER_X, PLAYER_Y, PLAYER_W, PLAYER_H);
 
 		if (doorSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
-			game.setScreen(new HallwayScreen(game)); // Va al pasillo
+			game.setScreen(new StoreGame(game)); // Va al pasillo
 		}
 		game.batch.end();
 	}
@@ -212,7 +216,7 @@ public class MainGameScreen implements Screen {
 	}
 
 	public void buttonCollision(Texture gameOverButtonActive, Texture gameOverButtonInactive, int GAMEO_BTN_X,
-			int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT, Screen newScreen) {
+			int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT, Screen newScreen, int plus_x, int plus_width ) {
 
 		if (GAMEO_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (GAMEO_BTN_X + PLAY_BTN_WIDTH)
 				&& Gdx.input.getY() <= (game.HEIGHT - GAMEO_BTN_Y)
@@ -221,6 +225,7 @@ public class MainGameScreen implements Screen {
 			game.batch.draw(gameOverButtonActive, GAMEO_BTN_X + 30, GAMEO_BTN_Y, PLAY_BTN_WIDTH - 30, PLAY_BTN_HEIGHT);
 
 			// Collision mouse with Play Button for click
+			if(newScreen!=null) {}
 			if (Gdx.input.isTouched()) { // If it clicks it
 				game.setScreen(newScreen);// Changes to main menu screen
 			}
