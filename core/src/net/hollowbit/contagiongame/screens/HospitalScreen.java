@@ -44,7 +44,7 @@ public class HospitalScreen implements Screen {
 	private void assignAnimations() {
 		int column=5;
 		int row=1;
-		Texture virusT= new Texture("doctorAni.png");
+		Texture virusT= new Texture("virus.png");
 		TextureRegion[][] tmp = TextureRegion.split(virusT, virusT.getWidth()/5, virusT.getHeight());
 		doctor = new TextureRegion[column*row];
 		int index = 0;

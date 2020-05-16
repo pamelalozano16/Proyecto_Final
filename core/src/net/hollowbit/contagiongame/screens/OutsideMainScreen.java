@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.ContagionGame;
 
-public class MainGameScreen implements Screen {
+public class OutsideMainScreen implements Screen {
 
 	// VARIABLES X, Y, WIDTH Y HEIGHT
 	private static final int PLAY_BTN_HEIGHT = 62;
@@ -44,6 +44,12 @@ public class MainGameScreen implements Screen {
 	public static Texture door;
 	public static Sprite doorSprite;
 	
+	//Buildings
+	Texture hospital;
+	Texture store;
+	public static Sprite storeSprite;
+	public static Sprite hospitalSprite;
+	
 	// PLAYER
 	TextureRegion[] player;
 	Animation<TextureRegion> playerStanding;
@@ -59,20 +65,24 @@ public class MainGameScreen implements Screen {
 	public static Sprite backgroundSprite;
 	float stateTime;
 
-	public MainGameScreen(ContagionGame game) {
+	public OutsideMainScreen(ContagionGame game) {
 		this.game = game;
 		this.pauseButtonActive = new Texture("pause_active.png");
 		this.pauseButtonInactive = new Texture("pause_inactive.png");
 		this.gameOverButtonActive = new Texture("gameOver_active.png");
 		this.gameOverButtonInactive = new Texture("gameOver_inactive.png");
 
-		backgroundTexture = new Texture("cuarto2.png");
+		//backgroundTexture = new Texture("cuarto2.png");
 		// backgroundTexture = new Texture("cuarto.png");
 
 		this.door = new Texture("door.png");
+		this.hospital=new Texture("hospital.png");
+		this.store=new Texture("store.png");
 		doorSprite = new Sprite(door);
+		storeSprite = new Sprite(store);
+		hospitalSprite = new Sprite(hospital);
 		// backgroundTexture = new Texture("cuarto2.png");
-		backgroundTexture = new Texture("cuarto.jpg");
+		backgroundTexture = new Texture("outside.png");
 
 		backgroundSprite = new Sprite(backgroundTexture);
 	}
@@ -99,11 +109,17 @@ public class MainGameScreen implements Screen {
 		game.batch.begin();
 
 		renderBackground();
-
+		
 		// Se pinta la puerta como sprite
-		doorSprite.draw(game.batch);
-		doorSprite.setPosition(DOOR_X, DOOR_Y);
-		doorSprite.setSize(DOOR_WIDTH, DOOR_HEIGHT);
+		storeSprite.setPosition(100, 100);
+		storeSprite.setSize(DOOR_WIDTH, DOOR_HEIGHT);
+		storeSprite.draw(game.batch);
+		
+		// Se pinta la puerta como sprite
+		hospitalSprite.setPosition(850, 100);
+		hospitalSprite.setSize(DOOR_WIDTH, DOOR_HEIGHT);
+		hospitalSprite.draw(game.batch);
+
 
 		// Detecta click con el mouse en la puerta
 		imageCollision(DOOR_X, DOOR_Y, DOOR_WIDTH, DOOR_HEIGHT, new HallwayScreen(game));
@@ -143,8 +159,11 @@ public class MainGameScreen implements Screen {
 		// Rectangle del player para que pueda detectar la colision
 		Rectangle playerRect = new Rectangle(PLAYER_X, PLAYER_Y, PLAYER_W, PLAYER_H);
 
-		if (doorSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
-			game.setScreen(new OutsideMainScreen(game)); // Va al pasillo
+		if (storeSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
+			game.setScreen(new StoreGame(game)); // Va al pasillo
+		}
+		if (hospitalSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
+			game.setScreen(new HospitalScreen(game)); // Va al pasillo
 		}
 		game.batch.end();
 	}

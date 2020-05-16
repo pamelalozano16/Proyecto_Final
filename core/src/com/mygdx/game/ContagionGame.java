@@ -2,6 +2,9 @@ package com.mygdx.game;
 
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import net.hollowbit.contagiongame.screens.MainGameScreen;
@@ -29,4 +32,26 @@ public class ContagionGame extends Game {
 	@Override
 	public void dispose () {
 	}
+	
+	public boolean buttonCollision(Texture gameOverButtonActive, Texture gameOverButtonInactive, int GAMEO_BTN_X,
+			int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT, int plus_x, int plus_width ) {
+		
+		if (GAMEO_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (GAMEO_BTN_X + PLAY_BTN_WIDTH)
+				&& Gdx.input.getY() <= (HEIGHT - GAMEO_BTN_Y)
+				&& (HEIGHT - GAMEO_BTN_Y - PLAY_BTN_HEIGHT < Gdx.input.getY())) {
+			// Collision mouse with Play Button for hover
+			batch.draw(gameOverButtonActive, GAMEO_BTN_X + 30, GAMEO_BTN_Y, PLAY_BTN_WIDTH - 30, PLAY_BTN_HEIGHT);
+
+			// Collision mouse with Play Button for click
+			if (Gdx.input.isTouched()) { // If it clicks it
+				return true;// Changes to main menu screen
+			}
+
+		} else {
+			// No Collision
+			batch.draw(gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT);
+		}
+		return false;
+
 }
+	}
