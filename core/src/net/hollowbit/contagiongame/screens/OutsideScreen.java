@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.ContagionGame;
 
-public class MainGameScreen implements Screen {
+public class OutsideScreen implements Screen {
 
 	private static final int PLAY_BTN_HEIGHT = 62;
 	private static final int PLAY_BTN_WIDTH = 134;
@@ -28,20 +28,22 @@ public class MainGameScreen implements Screen {
 	Texture pauseButtonInactive;
 	Texture gameOverButtonActive;
 	Texture gameOverButtonInactive;
-	Texture door;
+	Texture hospital;
+	Texture store;
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
     float stateTime;
     
 
-	public MainGameScreen(ContagionGame game) {
+	public OutsideScreen(ContagionGame game) {
 		this.game = game;
 		this.pauseButtonActive = new Texture("pause_active.png");
 		this.pauseButtonInactive = new Texture("pause_inactive.png");
 		this.gameOverButtonActive = new Texture("gameOver_active.png");
 		this.gameOverButtonInactive = new Texture("gameOver_inactive.png");
-		this.door=new Texture("door.png");
-        backgroundTexture = new Texture("cuarto2.png");
+		this.hospital=new Texture("hospital.png");
+		this.store=new Texture("store.png");
+        backgroundTexture = new Texture("outside.png");
         //backgroundTexture = new Texture("cuarto.jpg");
         backgroundSprite =new Sprite(backgroundTexture);
 	}
@@ -84,8 +86,9 @@ public class MainGameScreen implements Screen {
 		renderBackground();
 		
 		
-		game.batch.draw(door, DOOR_X, DOOR_Y,  DOOR_WIDTH, DOOR_HEIGHT);
-		collisionImage(DOOR_X, DOOR_Y, DOOR_WIDTH, DOOR_HEIGHT, new HallwayScreen(game));
+		game.batch.draw(hospital, 850, 100,  DOOR_WIDTH, DOOR_HEIGHT);
+		game.batch.draw(store, 100, 100,  DOOR_WIDTH, DOOR_HEIGHT);
+
 		/* 
 		 Gdx.input.getX() = mouse X coordinate
 		 Gdx.input.getY() = mouse Y coordinate
