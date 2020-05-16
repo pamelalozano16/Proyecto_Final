@@ -38,6 +38,10 @@ public class StoreGame implements Screen {
 	private static final int PLAY_BTN_WIDTH = 267;
 	private static final int PLAY_BTN_X = (ContagionGame.WIDTH / 2) - (PLAY_BTN_WIDTH / 2);
 	private static final int PLAY_BTN_Y = 50;
+	private static final int PAUSE_BTN_HEIGHT = 62;
+	private static final int PAUSE_BTN_WIDTH = 134;
+	private static final int PAUSE_BTN_X = 70;
+	private static final int PAUSE_BTN_Y = ContagionGame.HEIGHT - 65;
 	Texture playButtonActive;
 	Texture playButtonInactive;
 	Texture logo;
@@ -51,6 +55,10 @@ public class StoreGame implements Screen {
 	private static final int PLAYER_W = 100;
 	private int PLAYER_X = (ContagionGame.WIDTH / 2) - (PLAYER_W / 2);
 	private int PLAYER_Y = 50;
+	
+	//BOTONES
+	Texture pauseButtonActive;
+	Texture pauseButtonInactive;
 
 	// CART
 	public static Texture cart;
@@ -84,11 +92,15 @@ public class StoreGame implements Screen {
 		font.setColor(Color.GREEN);
 		font.getData().setScale(2, 2);
 		
+		//BUTTONS
+		this.pauseButtonActive = new Texture("gameOver_active.png");
+		this.pauseButtonInactive = new Texture("gameOver_inactive.png");
+		this.playButtonActive = new Texture("play_active.png");
+		this.playButtonInactive = new Texture("play_inactive.png");
+		
 		//TEXTURES AND SPRITES
 		backgroundTexture = new Texture("groceryStore.jpg");
 		backgroundSprite = new Sprite(backgroundTexture);
-		this.playButtonActive = new Texture("play_active.png");
-		this.playButtonInactive = new Texture("play_inactive.png");
 		this.player = new Texture("playerIndividual.png");
 		playerSprite = new Sprite(player);
 		this.cart = new Texture("cart.png");
@@ -178,6 +190,20 @@ public class StoreGame implements Screen {
 		game.batch.begin();
 
 		renderBackground();
+		
+		//BUTTON GAME OVER
+		
+		game.batch.draw(pauseButtonInactive,PAUSE_BTN_X, PAUSE_BTN_Y, PAUSE_BTN_WIDTH, PAUSE_BTN_HEIGHT);
+		if (Gdx.input.isTouched()) {
+			if (PAUSE_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (PAUSE_BTN_X + PAUSE_BTN_WIDTH)
+					&& Gdx.input.getY() <= (game.HEIGHT - PAUSE_BTN_Y)
+					&& (game.HEIGHT - PAUSE_BTN_Y - PAUSE_BTN_HEIGHT < Gdx.input.getY())) {
+					game.setScreen(new OutsideMainScreen(game));
+					background_sound.dispose();
+				}
+
+			}
+		
 
 		if (!start) { // Todavia no empieza el juego entonces pinta el button Play
 			game.batch.draw(logo, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +50), LOGO_WIDTH,
@@ -188,8 +214,8 @@ public class StoreGame implements Screen {
 				start = true;
 			}
 		} else if (0 < lives) {
-			font.draw(game.batch, "Score: " + String.valueOf(score), 90, 680);
-			font.draw(game.batch, "Lives: " + String.valueOf(lives), 90, 650);
+			font.draw(game.batch, "Score: " + String.valueOf(score), 1000, 680);
+			font.draw(game.batch, "Lives: " + String.valueOf(lives), 1000, 650);
 
 			movement(playerSprite);
 			playerSprite.draw(game.batch);
@@ -197,7 +223,7 @@ public class StoreGame implements Screen {
 
 			cartSprite.draw(game.batch);
 			cartSprite.setPosition(PLAYER_X, 60);
-
+			
 			// FRUITS
 			for (Sprite fruit : fruitSprites) {
 				fruit.draw(game.batch); // Pinta las frutas
@@ -235,9 +261,12 @@ public class StoreGame implements Screen {
 					break;
 				}
 			}
+			
 
 		} else {
-			font.draw(game.batch, "Game Over", 90, 620);
+			font.setColor(Color.RED);
+			font.getData().setScale(2, 2);
+			font.draw(game.batch, "Game Over", game.WIDTH/2, game.HEIGHT/2);
 			background_sound.dispose();
 		}
 
@@ -286,5 +315,13 @@ public class StoreGame implements Screen {
 			PLAYER_X += 10;
 		}
 	}
+
+
+
+public void buttonCollision(int GAMEO_BTN_X,
+		int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT, Screen newScreen) {
+
+
+}
 
 };
