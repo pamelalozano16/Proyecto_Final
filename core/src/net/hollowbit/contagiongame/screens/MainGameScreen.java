@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.mygdx.game.ContagionGame;
 
 public class MainGameScreen implements Screen {
@@ -44,6 +46,15 @@ public class MainGameScreen implements Screen {
 	public static Texture door;
 	public static Sprite doorSprite;
 	
+	//LEVELS
+	private Texture levelContainer = new Texture("levelContainer.png");
+	private Texture healthIcon = new Texture("heart.png");
+	private Texture health = new Texture("level.jpg");
+	private int healthLevel =100;
+	private Texture hungerIcon = new Texture("stomach.png");
+	private Texture hunger= new Texture("level.jpg");
+	private int hungerLevel = 100;
+	
 	// PLAYER
 	TextureRegion[] player;
 	Animation<TextureRegion> playerStanding;
@@ -75,6 +86,14 @@ public class MainGameScreen implements Screen {
 		backgroundTexture = new Texture("cuarto.jpg");
 
 		backgroundSprite = new Sprite(backgroundTexture);
+		
+		Timer.schedule(new Task() {
+			@Override
+			public void run() {
+				healthLevel-=10;
+				hungerLevel-=20;
+			}
+		}, 0, 600); //Cada 10 mins disminuye el hambre y la salud
 	}
 
 	@Override
@@ -114,6 +133,14 @@ public class MainGameScreen implements Screen {
 		buttonCollision(gameOverButtonActive, gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH,
 				PLAY_BTN_HEIGHT, new GameOver(game), 30, 30);
 
+		//LEVELS
+		game.batch.draw(healthIcon, 960, game.HEIGHT - 65, 30, 30);
+		game.batch.draw(health, 1000, game.HEIGHT - 65, healthLevel, 30);
+		game.batch.draw(hungerIcon, 960, game.HEIGHT - 105, 40, 40);
+		game.batch.draw(hunger, 1000, game.HEIGHT - 105, hungerLevel, 30);
+		game.batch.draw(levelContainer, 1000, game.HEIGHT - 65, 100, 30);
+		game.batch.draw(levelContainer, 1000, game.HEIGHT - 105, 100, 30);
+		
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);
 
