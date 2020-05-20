@@ -42,8 +42,9 @@ public class PauseScreen implements Screen {
     public static Sprite backgroundSprite;
     float stateTime;
     ShapeRenderer shapeRenderer;
+    Screen newScreen;
 
-	public PauseScreen(ContagionGame game) {
+	public PauseScreen(ContagionGame game, Texture background, Screen newScreen) {
 		this.game = game;
 		this.saveButtonActive = new Texture("save_active.png");
 		this.saveButtonInactive = new Texture("save_inactive.png");
@@ -55,9 +56,10 @@ public class PauseScreen implements Screen {
 		this.optionsButtonInactive = new Texture("options_inactive.png");
       // backgroundTexture = new Texture("cuarto2.png");
 		menuBackground = new Texture("menuBackground.png");
-        backgroundTexture = new Texture("cuarto.png");
+        backgroundTexture = background;
         backgroundSprite =new Sprite(backgroundTexture);
         shapeRenderer=new ShapeRenderer();
+        this.newScreen=newScreen;
         
 	}
 	
@@ -99,7 +101,7 @@ public class PauseScreen implements Screen {
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new MainGameScreen(game));//Changes to main menu screen
+				game.setScreen(newScreen);//Changes to main menu screen
 			}
 			
 		} else {
