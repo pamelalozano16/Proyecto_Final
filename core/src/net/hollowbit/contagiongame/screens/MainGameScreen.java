@@ -39,21 +39,19 @@ public class MainGameScreen implements Screen {
 	//BOTONES
 	Texture pauseButtonActive;
 	Texture pauseButtonInactive;
-	Texture gameOverButtonActive;
-	Texture gameOverButtonInactive;
 	
 	//PUERTA
 	public static Texture door;
 	public static Sprite doorSprite;
 	
 	//LEVELS
-	private Texture levelContainer = new Texture("levelContainer.png");
-	private Texture healthIcon = new Texture("heart.png");
-	private Texture health = new Texture("level.jpg");
-	private int healthLevel =100;
-	private Texture hungerIcon = new Texture("stomach.png");
-	private Texture hunger= new Texture("level.jpg");
-	private int hungerLevel = 100;
+	public Texture levelContainer = new Texture("levelContainer.png");
+	public Texture healthIcon = new Texture("heart.png");
+	public Texture health = new Texture("level.jpg");
+	public int healthLevel;
+	public Texture hungerIcon = new Texture("stomach.png");
+	public Texture hunger= new Texture("level.jpg");
+	public int hungerLevel;
 	
 	// PLAYER
 	TextureRegion[] player;
@@ -74,8 +72,6 @@ public class MainGameScreen implements Screen {
 		this.game = game;
 		this.pauseButtonActive = new Texture("pause_active.png");
 		this.pauseButtonInactive = new Texture("pause_inactive.png");
-		this.gameOverButtonActive = new Texture("gameOver_active.png");
-		this.gameOverButtonInactive = new Texture("gameOver_inactive.png");
 
 		backgroundTexture = new Texture("cuarto2.png");
 		// backgroundTexture = new Texture("cuarto.png");
@@ -84,16 +80,12 @@ public class MainGameScreen implements Screen {
 		doorSprite = new Sprite(door);
 		// backgroundTexture = new Texture("cuarto2.png");
 		backgroundTexture = new Texture("cuarto.jpg");
-
-		backgroundSprite = new Sprite(backgroundTexture);
 		
-		Timer.schedule(new Task() {
-			@Override
-			public void run() {
-				healthLevel-=10;
-				hungerLevel-=20;
-			}
-		}, 0, 600); //Cada 10 mins disminuye el hambre y la salud
+		healthLevel = game.healthLevel;
+		hungerLevel = game.hungerLevel;
+				
+		backgroundSprite = new Sprite(backgroundTexture);
+
 	}
 
 	@Override
@@ -111,6 +103,9 @@ public class MainGameScreen implements Screen {
 	public void render(float delta) {
 
 		stateTime += delta;
+		
+		healthLevel = game.healthLevel;
+		hungerLevel = game.hungerLevel;
 
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -120,18 +115,16 @@ public class MainGameScreen implements Screen {
 		renderBackground();
 
 		// Se pinta la puerta como sprite
-		doorSprite.draw(game.batch);
 		doorSprite.setPosition(DOOR_X, DOOR_Y);
 		doorSprite.setSize(DOOR_WIDTH, DOOR_HEIGHT);
+		doorSprite.draw(game.batch);
 
 		// Detecta click con el mouse en la puerta
 		imageCollision(DOOR_X, DOOR_Y, DOOR_WIDTH, DOOR_HEIGHT, new HallwayScreen(game));
 
 		// Detecta la colision del mouse con los botones y el click
 		buttonCollision(pauseButtonActive, pauseButtonInactive, PLAY_BTN_X, PLAY_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT,
-				new PauseScreen(game), 30, 30);
-		buttonCollision(gameOverButtonActive, gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH,
-				PLAY_BTN_HEIGHT, new GameOver(game), 30, 30);
+				new PauseScreen(game, backgroundTexture, this), 30, 30);
 
 		//LEVELS
 		game.batch.draw(healthIcon, 960, game.HEIGHT - 65, 30, 30);

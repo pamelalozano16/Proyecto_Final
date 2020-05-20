@@ -126,7 +126,7 @@ private static final int diff=120;
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new PauseScreen(game));//Changes to main menu screen
+				game.setScreen(new PauseScreen(game, backgroundTexture, this));//Changes to main menu screen
 			}
 			
 		} else {

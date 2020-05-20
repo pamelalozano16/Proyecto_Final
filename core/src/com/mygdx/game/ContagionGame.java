@@ -6,6 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 import net.hollowbit.contagiongame.screens.MainGameScreen;
 import net.hollowbit.contagiongame.screens.MainPlayScreen;
@@ -14,13 +17,28 @@ public class ContagionGame extends Game {
 	
 	public static final int WIDTH = 1200;
 	public static final int HEIGHT= 700;
-	
+	public int healthLevel =100;
+	public int hungerLevel = 100;
+	public ShapeRenderer shapeR;
 	public SpriteBatch batch;
 
 	
 	@Override
 	public void create () {
+		
+		Timer.schedule(new Task() {
+			@Override
+			public void run() {
+				healthLevel-=10;
+				hungerLevel-=20;
+			}
+		}, 0, 600); //Cada 10 mins disminuye el hambre y la salud
+		
+		healthLevel+=10;
+		hungerLevel+=20;
+		
 		batch = new SpriteBatch();
+		shapeR = new ShapeRenderer();
 		this.setScreen(new MainPlayScreen(this));
 	}
 

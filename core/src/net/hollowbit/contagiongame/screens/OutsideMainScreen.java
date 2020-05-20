@@ -3,6 +3,7 @@ package net.hollowbit.contagiongame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -20,8 +21,6 @@ public class OutsideMainScreen implements Screen {
 	private static final int PLAY_BTN_WIDTH = 134;
 	private static final int PLAY_BTN_X = 15;
 	private static final int PLAY_BTN_Y = ContagionGame.HEIGHT - 85;
-	private static final int GAMEO_BTN_X = 15;
-	private static final int GAMEO_BTN_Y = PLAY_BTN_Y - PLAY_BTN_HEIGHT;
 	private static final int DOOR_HEIGHT = 160;
 	private static final int DOOR_WIDTH = 233;
 	private static final int DOOR_X = ContagionGame.WIDTH - 260;
@@ -32,13 +31,10 @@ public class OutsideMainScreen implements Screen {
 	private int PLAYER_Y = 200;
 
 	ContagionGame game;
-
 	
 	//BOTONES
 	Texture pauseButtonActive;
 	Texture pauseButtonInactive;
-	Texture gameOverButtonActive;
-	Texture gameOverButtonInactive;
 	
 	//PUERTA
 	public static Texture door;
@@ -65,12 +61,19 @@ public class OutsideMainScreen implements Screen {
 	public static Sprite backgroundSprite;
 	float stateTime;
 
+	//LEVELS
+	public Texture levelContainer = new Texture("levelContainer.png");
+	public Texture healthIcon = new Texture("heart.png");
+	public Texture health = new Texture("level.jpg");
+	public int healthLevel;
+	public Texture hungerIcon = new Texture("stomach.png");
+	public Texture hunger= new Texture("level.jpg");
+	public int hungerLevel;
+	
 	public OutsideMainScreen(ContagionGame game) {
 		this.game = game;
 		this.pauseButtonActive = new Texture("pause_active.png");
 		this.pauseButtonInactive = new Texture("pause_inactive.png");
-		this.gameOverButtonActive = new Texture("gameOver_active.png");
-		this.gameOverButtonInactive = new Texture("gameOver_inactive.png");
 
 		//backgroundTexture = new Texture("cuarto2.png");
 		// backgroundTexture = new Texture("cuarto.png");
@@ -81,6 +84,9 @@ public class OutsideMainScreen implements Screen {
 		doorSprite = new Sprite(door);
 		storeSprite = new Sprite(store);
 		hospitalSprite = new Sprite(hospital);
+		
+		healthLevel = game.healthLevel;
+		hungerLevel = game.hungerLevel;
 		// backgroundTexture = new Texture("cuarto2.png");
 		backgroundTexture = new Texture("outside.png");
 
@@ -103,12 +109,23 @@ public class OutsideMainScreen implements Screen {
 
 		stateTime += delta;
 
+		healthLevel = game.healthLevel;
+		hungerLevel = game.hungerLevel;
+		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		game.batch.begin();
 
 		renderBackground();
+		
+		//LEVELS
+		game.batch.draw(healthIcon, 960, game.HEIGHT - 65, 30, 30);
+		game.batch.draw(health, 1000, game.HEIGHT - 65, healthLevel, 30);
+		game.batch.draw(hungerIcon, 960, game.HEIGHT - 105, 40, 40);
+		game.batch.draw(hunger, 1000, game.HEIGHT - 105, hungerLevel, 30);
+		game.batch.draw(levelContainer, 1000, game.HEIGHT - 65, 100, 30);
+		game.batch.draw(levelContainer, 1000, game.HEIGHT - 105, 100, 30);
 		
 		// Se pinta la puerta como sprite
 		storeSprite.setPosition(100, 100);
@@ -126,9 +143,7 @@ public class OutsideMainScreen implements Screen {
 
 		// Detecta la colision del mouse con los botones y el click
 		buttonCollision(pauseButtonActive, pauseButtonInactive, PLAY_BTN_X, PLAY_BTN_Y, PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT,
-				new PauseScreen(game), 30, 30);
-		buttonCollision(gameOverButtonActive, gameOverButtonInactive, GAMEO_BTN_X, GAMEO_BTN_Y, PLAY_BTN_WIDTH,
-				PLAY_BTN_HEIGHT, new GameOver(game), 30, 30);
+				new PauseScreen(game, backgroundTexture, this), 30, 30);
 
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);
@@ -160,12 +175,23 @@ public class OutsideMainScreen implements Screen {
 		Rectangle playerRect = new Rectangle(PLAYER_X, PLAYER_Y, PLAYER_W, PLAYER_H);
 
 		if (storeSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
-			game.setScreen(new StoreGame(game)); // Va al pasillo
+			game.setScreen(new StoreGame(game)); // Va a la tienda
 		}
 		if (hospitalSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
-			game.setScreen(new HospitalScreen(game)); // Va al pasillo
+			game.setScreen(new HospitalScreen(game)); // Va al Hospital
 		}
+		if(PLAYER_X<660&&500<PLAYER_X&& //El pasillo de regreso a la casa
+				480<=PLAYER_Y) {
+			game.setScreen(new MainGameScreen(game));
+		}
+		
 		game.batch.end();
+		
+	/*	DRAWS RECTANGLE
+	 * game.shapeR.begin(ShapeRenderer.ShapeType.Line);
+		game.shapeR.setColor(Color.RED);
+		game.shapeR.rect(540, 480, 100, 200);
+		game.shapeR.end();*/
 	}
 
 	@Override
