@@ -174,6 +174,11 @@ public class HospitalGame implements Screen {
 				LASER_Y = 0;
 				break;
 			}
+			
+			if (playerSprite.getBoundingRectangle().overlaps(virus.getBoundingRectangle())) {
+				// Si el cart toca la fruta gana score
+				game.setScreen(new OutsideMainScreen(game));
+			}
 		}
 		
 
