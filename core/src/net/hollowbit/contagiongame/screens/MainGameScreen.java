@@ -1,5 +1,6 @@
 package net.hollowbit.contagiongame.screens;
 
+import utils.ReadandWrite;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -34,7 +35,6 @@ public class MainGameScreen implements Screen {
 	private int PLAYER_Y = 200;
 
 	ContagionGame game;
-
 	
 	//BOTONES
 	Texture pauseButtonActive;
@@ -85,6 +85,8 @@ public class MainGameScreen implements Screen {
 		hungerLevel = game.hungerLevel;
 				
 		backgroundSprite = new Sprite(backgroundTexture);
+		
+	     ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel);
 
 	}
 

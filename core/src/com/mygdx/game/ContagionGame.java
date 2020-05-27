@@ -1,5 +1,5 @@
 package com.mygdx.game;
-
+import utils.ReadandWrite;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -36,6 +36,7 @@ public class ContagionGame extends Game {
 		
 		healthLevel+=10;
 		hungerLevel+=20;
+
 		
 		batch = new SpriteBatch();
 		shapeR = new ShapeRenderer();
