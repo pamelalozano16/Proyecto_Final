@@ -34,7 +34,7 @@ public class ContagionGame extends Game {
 			}
 		}, 0, 300); //Cada 5 mins disminuye el hambre y la salud
 		
-		//healthLevel+=10;
+		healthLevel+=10;
 		hungerLevel+=20;
 		
 		batch = new SpriteBatch();

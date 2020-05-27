@@ -35,6 +35,8 @@ public class HospitalGame implements Screen {
 	private boolean alive;
 	Texture logo;
 	TextureRegion[] virus;
+	Texture youloose;
+	Texture youwon;
 	private int counter = 0;
 	private int moveDown = 0;
 	Animation<TextureRegion> virusAnimation;
@@ -72,7 +74,8 @@ public class HospitalGame implements Screen {
 		this.playButtonInactive = new Texture("play_inactive.png");
 		this.pauseButtonActive = new Texture("goback_active.png");
 		this.pauseButtonInactive = new Texture("goback_inactive.png");
-		
+		youloose = new Texture("youloose.png");
+		youwon = new Texture("youwon.png");
         backgroundTexture = new Texture("hospitalInside.png");
         backgroundSprite =new Sprite(backgroundTexture);
 		logo = new Texture("hospitalLogo.png");
@@ -217,14 +220,12 @@ public class HospitalGame implements Screen {
 		}
 		} else if(!alive){
 			//YOU LOOSE
-			font.setColor(Color.RED);
-			font.getData().setScale(2, 2);
-			font.draw(game.batch, "Game Over", game.WIDTH/2, game.HEIGHT/2);
+			game.batch.draw(youloose, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
+					LOGO_HEIGHT);
 		}else {
 			//YOU WIN
-			font.setColor(Color.GREEN);
-			font.getData().setScale(2, 2);
-			font.draw(game.batch, "You Won", game.WIDTH/2, game.HEIGHT/2);
+			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
+					LOGO_HEIGHT);
 			if(game.healthLevel<100) {
 				game.healthLevel+=10;
 			}

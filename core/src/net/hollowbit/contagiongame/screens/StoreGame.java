@@ -23,6 +23,8 @@ public class StoreGame implements Screen {
 	ContagionGame game;
 	public boolean start;
 	public static Texture backgroundTexture;
+	public static Texture youloose;
+	public static Texture youwon;
 	public static Texture instructions;
 	public static Sprite backgroundSprite;
 	float stateTime;
@@ -104,6 +106,8 @@ public class StoreGame implements Screen {
 		backgroundSprite = new Sprite(backgroundTexture);
 		instructions = new Texture("marketgame_instructions.png");
 		this.player = new Texture("playerIndividual.png");
+		youloose = new Texture("youloose.png");
+		youwon = new Texture("youwon.png");
 		playerSprite = new Sprite(player);
 		this.cart = new Texture("cart.png");
 		cartSprite = new Sprite(cart);
@@ -217,7 +221,7 @@ public class StoreGame implements Screen {
 			if (playbtn) { // Si le da click al boton empieza el juego
 				start = true;
 			}
-		} else if (0 < lives && score < 50) { //Score amount to win
+		} else if (0 < lives && score < 200) { //Score amount to win
 			font.draw(game.batch, "Score: " + String.valueOf(score), 1000, 680);
 			font.draw(game.batch, "Lives: " + String.valueOf(lives), 1000, 650);
 
@@ -269,15 +273,13 @@ public class StoreGame implements Screen {
 
 		} else if(lives==0){ 
 			//YOU LOOSE
-			font.setColor(Color.RED);
-			font.getData().setScale(2, 2);
-			font.draw(game.batch, "Game Over", game.WIDTH/2, game.HEIGHT/2);
+			game.batch.draw(youloose, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
+					LOGO_HEIGHT);
 			background_sound.dispose();
 		} else { 
 			//YOU WIN
-			font.setColor(Color.GREEN);
-			font.getData().setScale(2, 2);
-			font.draw(game.batch, "YOU WON", game.WIDTH/2, game.HEIGHT/2);
+			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
+					LOGO_HEIGHT);
 			if(game.hungerLevel<100) {
 				game.hungerLevel+=20;
 			}
