@@ -4,9 +4,11 @@ import utils.ReadandWrite;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -33,6 +35,7 @@ public class MainGameScreen implements Screen {
 	private static final int PLAYER_W = 100;
 	private int PLAYER_X = (ContagionGame.WIDTH / 2) - (PLAYER_W / 2);
 	private int PLAYER_Y = 200;
+	
 
 	ContagionGame game;
 	
@@ -52,6 +55,8 @@ public class MainGameScreen implements Screen {
 	public Texture hungerIcon = new Texture("stomach.png");
 	public Texture hunger= new Texture("level.jpg");
 	public int hungerLevel;
+	public int money;
+	private BitmapFont font;
 	
 	// PLAYER
 	TextureRegion[] player;
@@ -83,10 +88,17 @@ public class MainGameScreen implements Screen {
 		
 		healthLevel = game.healthLevel;
 		hungerLevel = game.hungerLevel;
+		money=game.money;
+
 				
 		backgroundSprite = new Sprite(backgroundTexture);
 		
 	     ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel);
+	     
+			// FONT
+			font = new BitmapFont();
+			font.setColor(Color.WHITE);
+			font.getData().setScale(1, 1);
 
 	}
 
@@ -135,6 +147,7 @@ public class MainGameScreen implements Screen {
 		game.batch.draw(hunger, 1000, game.HEIGHT - 105, hungerLevel, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 65, 100, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 105, 100, 30);
+		font.draw(game.batch, "Money: $"+money ,1000, game.HEIGHT - 125);
 		
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);

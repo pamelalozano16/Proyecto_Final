@@ -18,6 +18,7 @@ public class ContagionGame extends Game {
 	public static final int WIDTH = 1200;
 	public static final int HEIGHT= 700;
 	public int healthLevel =100;
+	public int money=0;
 	public int hungerLevel = 100;
 	public ShapeRenderer shapeR;
 	public SpriteBatch batch;

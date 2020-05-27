@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -69,6 +70,8 @@ public class OutsideMainScreen implements Screen {
 	public Texture hungerIcon = new Texture("stomach.png");
 	public Texture hunger= new Texture("level.jpg");
 	public int hungerLevel;
+	public int money;
+	private BitmapFont font;
 	
 	public OutsideMainScreen(ContagionGame game) {
 		this.game = game;
@@ -87,10 +90,15 @@ public class OutsideMainScreen implements Screen {
 		
 		healthLevel = game.healthLevel;
 		hungerLevel = game.hungerLevel;
-		// backgroundTexture = new Texture("cuarto2.png");
+		money= game.money;
+		
 		backgroundTexture = new Texture("outside.png");
 
 		backgroundSprite = new Sprite(backgroundTexture);
+		// FONT
+		font = new BitmapFont();
+		font.setColor(Color.WHITE);
+		font.getData().setScale(1, 1);
 	}
 
 	@Override
@@ -126,6 +134,7 @@ public class OutsideMainScreen implements Screen {
 		game.batch.draw(hunger, 1000, game.HEIGHT - 105, hungerLevel, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 65, 100, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 105, 100, 30);
+		font.draw(game.batch, "Money: $"+money ,1000, game.HEIGHT - 125);
 		
 		// Se pinta la puerta como sprite
 		storeSprite.setPosition(100, 100);

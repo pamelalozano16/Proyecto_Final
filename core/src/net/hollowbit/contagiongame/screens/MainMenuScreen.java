@@ -54,6 +54,8 @@ public class MainMenuScreen implements Screen {
         backgroundTexture = new Texture("background.jpg");
         backgroundSprite =new Sprite(backgroundTexture);
 		logo = new Texture("contagion.png");
+		
+		
 	}
 
 	
