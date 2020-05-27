@@ -23,6 +23,7 @@ public class StoreGame implements Screen {
 	ContagionGame game;
 	public boolean start;
 	public static Texture backgroundTexture;
+	public static Texture instructions;
 	public static Sprite backgroundSprite;
 	float stateTime;
 	public int score = 0;
@@ -37,7 +38,7 @@ public class StoreGame implements Screen {
 	private static final int PLAY_BTN_HEIGHT = 123;
 	private static final int PLAY_BTN_WIDTH = 267;
 	private static final int PLAY_BTN_X = (ContagionGame.WIDTH / 2) - (PLAY_BTN_WIDTH / 2);
-	private static final int PLAY_BTN_Y = 50;
+	private static final int PLAY_BTN_Y = 10;
 	private static final int PAUSE_BTN_HEIGHT = 62;
 	private static final int PAUSE_BTN_WIDTH = 134;
 	private static final int PAUSE_BTN_X = 70;
@@ -93,14 +94,15 @@ public class StoreGame implements Screen {
 		font.getData().setScale(2, 2);
 		
 		//BUTTONS
-		this.pauseButtonActive = new Texture("gameOver_active.png");
-		this.pauseButtonInactive = new Texture("gameOver_inactive.png");
+		this.pauseButtonActive = new Texture("goback_active.png");
+		this.pauseButtonInactive = new Texture("goback_inactive.png");
 		this.playButtonActive = new Texture("play_active.png");
 		this.playButtonInactive = new Texture("play_inactive.png");
 		
 		//TEXTURES AND SPRITES
 		backgroundTexture = new Texture("groceryStore.jpg");
 		backgroundSprite = new Sprite(backgroundTexture);
+		instructions = new Texture("marketgame_instructions.png");
 		this.player = new Texture("playerIndividual.png");
 		playerSprite = new Sprite(player);
 		this.cart = new Texture("cart.png");
@@ -191,6 +193,7 @@ public class StoreGame implements Screen {
 
 		renderBackground();
 		
+		
 		//BUTTON GAME OVER
 		
 		game.batch.draw(pauseButtonInactive,PAUSE_BTN_X, PAUSE_BTN_Y, PAUSE_BTN_WIDTH, PAUSE_BTN_HEIGHT);
@@ -208,12 +211,13 @@ public class StoreGame implements Screen {
 		if (!start) { // Todavia no empieza el juego entonces pinta el button Play
 			game.batch.draw(logo, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +50), LOGO_WIDTH,
 					LOGO_HEIGHT);
+			game.batch.draw(instructions, (game.WIDTH/2)-219, 120, 438, 320);
 			boolean playbtn = game.buttonCollision(playButtonActive, playButtonInactive, PLAY_BTN_X, PLAY_BTN_Y,
 					PLAY_BTN_WIDTH, PLAY_BTN_HEIGHT, 50, 40);
 			if (playbtn) { // Si le da click al boton empieza el juego
 				start = true;
 			}
-		} else if (0 < lives) {
+		} else if (0 < lives && score < 50) { //Score amount to win
 			font.draw(game.batch, "Score: " + String.valueOf(score), 1000, 680);
 			font.draw(game.batch, "Lives: " + String.valueOf(lives), 1000, 650);
 
@@ -263,10 +267,20 @@ public class StoreGame implements Screen {
 			}
 			
 
-		} else {
+		} else if(lives==0){ 
+			//YOU LOOSE
 			font.setColor(Color.RED);
 			font.getData().setScale(2, 2);
 			font.draw(game.batch, "Game Over", game.WIDTH/2, game.HEIGHT/2);
+			background_sound.dispose();
+		} else { 
+			//YOU WIN
+			font.setColor(Color.GREEN);
+			font.getData().setScale(2, 2);
+			font.draw(game.batch, "YOU WON", game.WIDTH/2, game.HEIGHT/2);
+			if(game.hungerLevel<100) {
+				game.hungerLevel+=20;
+			}
 			background_sound.dispose();
 		}
 
