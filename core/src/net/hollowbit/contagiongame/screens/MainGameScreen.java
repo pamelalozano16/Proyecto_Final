@@ -32,6 +32,7 @@ public class MainGameScreen implements Screen {
 	private static final int PLAYER_W = 100;
 	private int PLAYER_X = (ContagionGame.WIDTH / 2) - (PLAYER_W / 2);
 	private int PLAYER_Y = 200;
+	private int text =0;
 
 	ContagionGame game;
 
@@ -47,6 +48,11 @@ public class MainGameScreen implements Screen {
 	//LEVELS
 	public Texture levelContainer = new Texture("levelContainer.png");
 	public Texture healthIcon = new Texture("heart.png");
+	public Texture text1 = new Texture("text1.png");
+	public Texture text2 = new Texture("text2.png");
+	public Texture text3 = new Texture("text3.png");
+	public Texture text4 = new Texture("text4.png");
+	public Texture next = new Texture("next.png");
 	public Texture health = new Texture("level.jpg");
 	public int healthLevel;
 	public Texture hungerIcon = new Texture("stomach.png");
@@ -133,6 +139,11 @@ public class MainGameScreen implements Screen {
 		game.batch.draw(hunger, 1000, game.HEIGHT - 105, hungerLevel, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 65, 100, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 105, 100, 30);
+		
+		if (text==0) {
+			game.batch.draw(text1,50, 0, game.WIDTH-100, 300);
+			game.batch.draw(next,game.WIDTH-130,130, 60, 60);
+		}
 		
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);
