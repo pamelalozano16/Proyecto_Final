@@ -120,7 +120,7 @@ public class PauseScreen implements Screen {
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.justTouched()) { //If it clicks it
-				  ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel);
+				  ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel, game.money);
 				game.setScreen(newScreen);//Changes to main menu screen
 			}
 			
