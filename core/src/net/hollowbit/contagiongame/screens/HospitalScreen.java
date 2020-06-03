@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.ContagionGame;
@@ -17,6 +19,10 @@ public class HospitalScreen implements Screen {
 	private static final int PLAY_BTN_WIDTH = 267;
 	private static final int PLAY_BTN_X = (ContagionGame.WIDTH / 2) - (PLAY_BTN_WIDTH / 2);
 	private static final int PLAY_BTN_Y = 50;
+	private static final int PAUSE_BTN_HEIGHT = 62;
+	private static final int PAUSE_BTN_WIDTH = 134;
+	private static final int PAUSE_BTN_X = 70;
+	private static final int PAUSE_BTN_Y = ContagionGame.HEIGHT - 65;
 	private static final int LOGO_WIDTH = 800;
 	private static final int LOGO_HEIGHT = 200;
 	private static final int VIRUS_WIDTH=60;
@@ -34,6 +40,10 @@ public class HospitalScreen implements Screen {
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
     float stateTime;
+    Texture pauseButtonActive;
+    Texture pauseButtonInactive;
+	private BitmapFont font;
+
 
 	public HospitalScreen(ContagionGame game) {
 		this.game = game;
@@ -42,6 +52,9 @@ public class HospitalScreen implements Screen {
         backgroundTexture = new Texture("hospitalInside.png");
         backgroundSprite =new Sprite(backgroundTexture);
 		logo = new Texture("hospitalLogo.png");
+		this.pauseButtonActive = new Texture("goback_active.png");
+		this.pauseButtonInactive = new Texture("goback_inactive.png");
+		font = new BitmapFont();
 	}
 	
 	private void assignAnimations() {
@@ -90,6 +103,16 @@ public class HospitalScreen implements Screen {
 		 Gdx.input.getX() = mouse X coordinate
 		 Gdx.input.getY() = mouse Y coordinate
 		 */
+		game.batch.draw(pauseButtonInactive,PAUSE_BTN_X, PAUSE_BTN_Y, PAUSE_BTN_WIDTH, PAUSE_BTN_HEIGHT);
+		if (Gdx.input.justTouched()) {
+			if (PAUSE_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (PAUSE_BTN_X + PAUSE_BTN_WIDTH)
+					&& Gdx.input.getY() <= (game.HEIGHT - PAUSE_BTN_Y)
+					&& (game.HEIGHT - PAUSE_BTN_Y - PAUSE_BTN_HEIGHT < Gdx.input.getY())) {
+					game.setScreen(new OutsideMainScreen(game));
+				}
+
+			}
+		
 		if (PLAY_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (PLAY_BTN_X + PLAY_BTN_WIDTH)
 				&& Gdx.input.getY() <= (game.HEIGHT - PLAY_BTN_Y)
 				&& (game.HEIGHT - PLAY_BTN_Y - PLAY_BTN_HEIGHT < Gdx.input.getY())) {
@@ -98,7 +121,14 @@ public class HospitalScreen implements Screen {
 			
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new HospitalGame(game));//Changes to main menu screen
+				if(game.money<20) {
+					font.setColor(Color.RED);
+					font.getData().setScale(2, 2);
+					font.draw(game.batch, "NO ALCANZA EL DINERO, REGRESA Y ESTUDIA EN LA COMPUTADORA", 100, 200);
+				} else {
+					game.money-=20;
+					game.setScreen(new HospitalGame(game));//Changes to main menu screen
+				}
 			}
 			
 		} else {

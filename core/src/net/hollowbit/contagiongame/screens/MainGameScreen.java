@@ -289,7 +289,7 @@ public class MainGameScreen implements Screen {
 
 			// Collision mouse with Play Button for click
 			if(newScreen!=null) {}
-			if (Gdx.input.isTouched()) { // If it clicks it
+			if (Gdx.input.justTouched()) { // If it clicks it
 				game.setScreen(newScreen);// Changes to main menu screen
 			}
 
@@ -309,7 +309,7 @@ public class MainGameScreen implements Screen {
 			// PLAY_BTN_WIDTH-30, PLAY_BTN_HEIGHT);
 
 			// Collision mouse with Play Button for click
-			if (Gdx.input.isTouched()) { // If it clicks it
+			if (Gdx.input.justTouched()) { // If it clicks it
 				game.setScreen(PauseScreen);// Changes to main menu screen
 			}
 
@@ -324,7 +324,7 @@ public class MainGameScreen implements Screen {
 			// PLAY_BTN_WIDTH-30, PLAY_BTN_HEIGHT);
 
 			// Collision mouse with Play Button for click
-			if (Gdx.input.isTouched()) { // If it clicks it
+			if (Gdx.input.justTouched()) { // If it clicks it
 				text++;// Changes to main menu screen
 			}
 
