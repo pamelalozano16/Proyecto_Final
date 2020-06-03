@@ -39,8 +39,13 @@ public class ContagionGame extends Game {
 		Timer.schedule(new Task() {
 			@Override
 			public void run() {
-				healthLevel-=2;//Health disminuye por 10 
-				hungerLevel-=4; //Hunger disminuye por 20
+				if(healthLevel >0 ) {
+					healthLevel-=2;//Health disminuye por 10 
+				}
+				if(hungerLevel >0) {
+					hungerLevel-=4; 
+				}
+				//Hunger disminuye por 20
 			}
 		}, 0, 5); //Cada 5 mins disminuye el hambre y la salud
 		
@@ -50,7 +55,6 @@ public class ContagionGame extends Game {
 		
 		batch = new SpriteBatch();
 		shapeR = new ShapeRenderer();
-		this.setScreen(new MainPlayScreen(this));
 		
 		//SOUNDS
 		playBackgroundSound();
@@ -60,6 +64,7 @@ public class ContagionGame extends Game {
 	@Override
 	public void render () {
 		super.render();
+		
 	}
 	
 	@Override
