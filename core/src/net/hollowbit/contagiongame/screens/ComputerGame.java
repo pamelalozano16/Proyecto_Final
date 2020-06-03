@@ -49,6 +49,7 @@ public class ComputerGame implements Screen {
 	private BitmapFont font;
 	int score =0;
 	int correct=0;
+	boolean help= false;
 	
 	//BOTONES
 	Texture pauseButtonActive;
@@ -184,6 +185,12 @@ public class ComputerGame implements Screen {
 		font.draw(game.batch, repuestas[questionNum][2] ,(650)+100, ((game.HEIGHT/2)-100));
 		font.draw(game.batch, repuestas[questionNum][3] ,(650)+100, ((game.HEIGHT/2)+50));
 		}else {
+			System.out.println(score);
+			if(!help) {
+				game.money+=(score)*4;
+				help=true;
+			}
+
 			font.draw(game.batch, "Score:"+ Integer.toString(score) +"/5",(600)-10, (game.HEIGHT/2)+100);
 			game.batch.draw(pauseButtonInactive,(game.WIDTH/2)-100, (game.HEIGHT/2), 200, 100);
 			if (Gdx.input.isTouched()) {

@@ -34,7 +34,7 @@ public class MainGameScreen2 implements Screen {
 	private static final int PLAYER_H = 150;
 	private static final int PLAYER_W = 100;
 	private int PLAYER_X = (ContagionGame.WIDTH / 2) - (PLAYER_W / 2);
-	private int PLAYER_Y = 200;
+	private int PLAYER_Y = 300;
 	private int text =0;
 
 
