@@ -288,7 +288,7 @@ public class StoreGame implements Screen {
 			//YOU LOOSE
 			game.batch.draw(youloose, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
 					LOGO_HEIGHT);
-			if(game.hungerLevel<100&&25<=score) {
+			if(game.hungerLevel<=90&&25<=score) {
 				game.hungerLevel+=20;
 			}
 			background_sound.dispose();

@@ -226,8 +226,8 @@ public class HospitalGame implements Screen {
 			//YOU WIN
 			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
 					LOGO_HEIGHT);
-			if(game.healthLevel<100) {
-				game.healthLevel+=10;
+			if(game.healthLevel<=80) {
+				game.healthLevel+=20;
 			}
 			
 			}
