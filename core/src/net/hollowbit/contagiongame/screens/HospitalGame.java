@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,6 +30,8 @@ public class HospitalGame implements Screen {
 	private static final int PAUSE_BTN_WIDTH = 134;
 	private static final int PAUSE_BTN_X = 60;
 	private static final int PAUSE_BTN_Y = ContagionGame.HEIGHT - 70;
+	public Sound background_sound;
+	public Sound laserSound;
 
 	ContagionGame game;
 	
@@ -97,6 +100,11 @@ public class HospitalGame implements Screen {
 			virusSprites.add(virusSprite);
 			}
 		}
+		background_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/wii.mp3"));
+		laserSound= Gdx.audio.newSound(Gdx.files.internal("sounds/laser2.mp3"));
+		game.background_sound.dispose();
+		long bs = background_sound.play();
+		background_sound.setLooping(bs, true);
 	}
 	
 	private void assignAnimations() {
@@ -161,6 +169,7 @@ public class HospitalGame implements Screen {
 						&& Gdx.input.getY() <= (game.HEIGHT - PAUSE_BTN_Y)
 						&& (game.HEIGHT - PAUSE_BTN_Y - PAUSE_BTN_HEIGHT < Gdx.input.getY())) {
 						game.setScreen(new OutsideMainScreen(game));
+						background_sound.dispose();
 					}
 
 				}
@@ -205,6 +214,8 @@ public class HospitalGame implements Screen {
 				if (Gdx.input.isKeyPressed(Keys.UP)) {
 					LASER_X = PLAYER_X+50;
 					LASER_Y = PLAYER_H-30;
+					laserSound.play();
+					long bs = background_sound.play();
 				}
 				if (laserSprite.getBoundingRectangle().overlaps(virus.getBoundingRectangle())) {
 					// Si el cart toca la fruta gana score

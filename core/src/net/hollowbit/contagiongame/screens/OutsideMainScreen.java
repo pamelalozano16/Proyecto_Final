@@ -99,6 +99,7 @@ public class OutsideMainScreen implements Screen {
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		font.getData().setScale(1, 1);
+
 	}
 
 	@Override

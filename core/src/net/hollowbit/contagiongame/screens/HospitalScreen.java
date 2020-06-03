@@ -3,6 +3,7 @@ package net.hollowbit.contagiongame.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -21,6 +22,7 @@ public class HospitalScreen implements Screen {
 	private static final int VIRUS_WIDTH=60;
 	private static final int VIRUS_HEIGHT=73;
 	private static final float VIRUS_SPEED=0.5f;
+	public Sound background_sound;
 
 	ContagionGame game;
 

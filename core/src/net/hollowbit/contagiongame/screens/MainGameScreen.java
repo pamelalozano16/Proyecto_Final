@@ -3,6 +3,7 @@ package net.hollowbit.contagiongame.screens;
 import utils.ReadandWrite;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -40,6 +41,8 @@ public class MainGameScreen implements Screen {
 
 	ContagionGame game;
 	
+	
+
 	//BOTONES
 	Texture pauseButtonActive;
 	Texture pauseButtonInactive;
@@ -127,6 +130,8 @@ public class MainGameScreen implements Screen {
 		backgroundSprite.draw(game.batch);
 	}
 
+
+	
 	@Override
 	public void render(float delta) {
 
@@ -167,7 +172,8 @@ public class MainGameScreen implements Screen {
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 105, 100, 30);
 		font.draw(game.batch, "Money: $"+money ,1000, game.HEIGHT - 125);
 		
-				
+
+		//ANIMATION
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);
 
