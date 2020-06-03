@@ -30,10 +30,10 @@ public class ContagionGame extends Game {
 		Timer.schedule(new Task() {
 			@Override
 			public void run() {
-				healthLevel-=10;//Health disminuye por 10 
-				hungerLevel-=20; //Hunger disminuye por 20
+				healthLevel-=2;//Health disminuye por 10 
+				hungerLevel-=4; //Hunger disminuye por 20
 			}
-		}, 0, 300); //Cada 5 mins disminuye el hambre y la salud
+		}, 0, 5); //Cada 5 mins disminuye el hambre y la salud
 		
 		healthLevel+=10;
 		hungerLevel+=20;

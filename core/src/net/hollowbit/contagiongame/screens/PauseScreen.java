@@ -11,6 +11,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.ContagionGame;
 
+import utils.ReadandWrite;
+
 public class PauseScreen implements Screen {
 
 	private static final int diff=120;
@@ -100,7 +102,7 @@ public class PauseScreen implements Screen {
 			game.batch.draw(resumeButtonActive, BTN_X + 50, RESUME_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(newScreen);//Changes to main menu screen
 			}
 			
@@ -117,8 +119,9 @@ public class PauseScreen implements Screen {
 			game.batch.draw(saveButtonActive, BTN_X + 50, SAVE_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
-				//game.setScreen(new PauseScreen(game));//Changes to main menu screen
+			if(Gdx.input.justTouched()) { //If it clicks it
+				  ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel);
+				game.setScreen(newScreen);//Changes to main menu screen
 			}
 			
 		} else {
@@ -134,7 +137,7 @@ public class PauseScreen implements Screen {
 			game.batch.draw(optionsButtonActive, BTN_X + 50, OPTIONS_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new OptionScreen(game));//Changes to main menu screen
 			}
 			
@@ -151,7 +154,7 @@ public class PauseScreen implements Screen {
 			game.batch.draw(exitButtonActive, BTN_X + 50, EXIT_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new MainMenuScreen(game));//Changes to main menu screen
 			}
 			

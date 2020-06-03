@@ -91,7 +91,7 @@ private static final int diff=120;
 			game.batch.draw(controlsButtonActive, BTN_X + 50, CONTROLS_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new ControlsScreen(game));//Changes to main menu screen
 			}
 			
@@ -108,7 +108,7 @@ private static final int diff=120;
 			game.batch.draw(creditsButtonActive, BTN_X + 50, CREDITS_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new CreditsScreen(game));//Changes to main menu screen
 			}
 			
@@ -125,7 +125,7 @@ private static final int diff=120;
 			game.batch.draw(exitButtonActive, BTN_X + 50, EXIT_BTN_Y, BTN_WIDTH-40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new MainMenuScreen(game));//Changes to main menu screen
 			}
 			

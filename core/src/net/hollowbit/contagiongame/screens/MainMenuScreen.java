@@ -116,7 +116,7 @@ public class MainMenuScreen implements Screen {
 			game.batch.draw(resumeButtonActive, BTN_X + 50, RESUME_BTN_Y, BTN_WIDTH - 40, BTN_HEIGHT);
 			ReadandWrite.Load("archivo.txt", game);
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new MainGameScreen2(game));//Changes to main menu screen
 			}
 			
@@ -135,7 +135,7 @@ public class MainMenuScreen implements Screen {
 			game.healthLevel=100;
 			game.hungerLevel=100;
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new MainGameScreen2(game));//Changes to main menu screen
 			}
 			
@@ -153,7 +153,7 @@ public class MainMenuScreen implements Screen {
 			game.batch.draw(optionButtonActive, BTN_X + 50, OPTION_BTN_Y, BTN_WIDTH - 40, BTN_HEIGHT);
 			
 			//Collision mouse with Play Button for click
-			if(Gdx.input.isTouched()) { //If it clicks it
+			if(Gdx.input.justTouched()) { //If it clicks it
 				game.setScreen(new Options2Screen(game));//Changes to main menu screen
 			}
 			

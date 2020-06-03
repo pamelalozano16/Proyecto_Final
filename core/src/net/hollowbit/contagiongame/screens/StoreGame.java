@@ -221,7 +221,12 @@ public class StoreGame implements Screen {
 			if (playbtn) { // Si le da click al boton empieza el juego
 				start = true;
 			}
-		} else if (0 < lives && score < 200) { //Score amount to win
+		} else if(game.money<10) {
+			font.setColor(Color.RED);
+			font.getData().setScale(2, 2);
+			font.draw(game.batch, "NO ALCANZA EL DINERO, REGRESA Y ESTUDIA EN LA COMPUTADORA", 100, 300);
+		} else if (0 < lives) { //Score amount to win
+
 			font.draw(game.batch, "Score: " + String.valueOf(score), 1000, 680);
 			font.draw(game.batch, "Lives: " + String.valueOf(lives), 1000, 650);
 
@@ -280,7 +285,7 @@ public class StoreGame implements Screen {
 			//YOU WIN
 			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
 					LOGO_HEIGHT);
-			if(game.hungerLevel<100) {
+			if(game.hungerLevel<100&&25<=score) {
 				game.hungerLevel+=20;
 			}
 			background_sound.dispose();
