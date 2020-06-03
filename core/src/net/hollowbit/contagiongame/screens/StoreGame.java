@@ -50,6 +50,7 @@ public class StoreGame implements Screen {
 	Texture logo;
 	private static final int LOGO_WIDTH = 800;
 	private static final int LOGO_HEIGHT = 200;
+	boolean cobrado=false;
 
 	// PLAYER
 	public static Texture player;
@@ -223,11 +224,16 @@ public class StoreGame implements Screen {
 			if (playbtn) { // Si le da click al boton empieza el juego
 				start = true;
 			}
-		} else if(game.money<10) {
+		} else if(game.money<10&&!cobrado) {
 			font.setColor(Color.RED);
 			font.getData().setScale(2, 2);
 			font.draw(game.batch, "NO ALCANZA EL DINERO, REGRESA Y ESTUDIA EN LA COMPUTADORA", 100, 300);
 		} else if (0 < lives) { //Score amount to win
+			if(!cobrado) {
+				System.out.println("cobrado");
+				game.money-=10;
+				cobrado=true;
+			}
 
 			font.draw(game.batch, "Score: " + String.valueOf(score), 1000, 680);
 			font.draw(game.batch, "Lives: " + String.valueOf(lives), 1000, 650);
@@ -268,7 +274,6 @@ public class StoreGame implements Screen {
 					// Si el personaje toca el virus se acaba el juego
 					lives = 0;
 					background_sound.dispose();
-					game.playBackgroundSound();
 					break;
 				}
 				if (virus.getY() <= 0) {
@@ -279,22 +284,16 @@ public class StoreGame implements Screen {
 			}
 			
 
-		} else if(lives==0){ 
+		} else{ 
 			//YOU LOOSE
 			game.batch.draw(youloose, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
-					LOGO_HEIGHT);
-			background_sound.dispose();
-
-		} else { 
-			//YOU WIN
-			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
 					LOGO_HEIGHT);
 			if(game.hungerLevel<100&&25<=score) {
 				game.hungerLevel+=20;
 			}
 			background_sound.dispose();
 
-		}
+		};
 
 		game.batch.end();
 	}
