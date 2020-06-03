@@ -203,7 +203,7 @@ public class StoreGame implements Screen {
 		//BUTTON GAME OVER
 		
 		game.batch.draw(pauseButtonInactive,PAUSE_BTN_X, PAUSE_BTN_Y, PAUSE_BTN_WIDTH, PAUSE_BTN_HEIGHT);
-		if (Gdx.input.isTouched()) {
+		if (Gdx.input.justTouched()) {
 			if (PAUSE_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (PAUSE_BTN_X + PAUSE_BTN_WIDTH)
 					&& Gdx.input.getY() <= (game.HEIGHT - PAUSE_BTN_Y)
 					&& (game.HEIGHT - PAUSE_BTN_Y - PAUSE_BTN_HEIGHT < Gdx.input.getY())) {
