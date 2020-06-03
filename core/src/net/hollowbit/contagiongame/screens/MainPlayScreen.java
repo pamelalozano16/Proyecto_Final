@@ -15,9 +15,8 @@ public class MainPlayScreen implements Screen {
 	private static final int PLAY_BTN_WIDTH = 267;
 	private static final int PLAY_BTN_X = (ContagionGame.WIDTH / 2) - (PLAY_BTN_WIDTH / 2);
 	private static final int PLAY_BTN_Y = 50;
-	private static final int LOGO_WIDTH = 400;
-	private static final int LOGO_HEIGHT = 300;
-	private static final int VIRUS_WIDTH=60;
+	private static final int LOGO_WIDTH = 500;
+	private static final int LOGO_HEIGHT = 140;
 	private static final int VIRUS_HEIGHT=73;
 	private static final float VIRUS_SPEED=0.5f;
 
@@ -38,7 +37,7 @@ public class MainPlayScreen implements Screen {
 		this.playButtonInactive = new Texture("play_inactive.png");
         backgroundTexture = new Texture("background.jpg");
         backgroundSprite =new Sprite(backgroundTexture);
-		logo = new Texture("contagion.png");
+		logo = new Texture("contagionLogo.png");
 	}
 	
 	private void assignAnimations() {
@@ -80,7 +79,7 @@ public class MainPlayScreen implements Screen {
 		renderBackground();
 		
 		// Pinta el logo
-		game.batch.draw(logo, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT-60), LOGO_WIDTH,
+		game.batch.draw(logo, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT+160), LOGO_WIDTH,
 				LOGO_HEIGHT);
 
 		/* 

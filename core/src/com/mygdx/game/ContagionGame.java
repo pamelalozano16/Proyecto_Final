@@ -1,5 +1,5 @@
 package com.mygdx.game;
-
+import utils.ReadandWrite;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -18,6 +18,7 @@ public class ContagionGame extends Game {
 	public static final int WIDTH = 1200;
 	public static final int HEIGHT= 700;
 	public int healthLevel =100;
+	public int money=0;
 	public int hungerLevel = 100;
 	public ShapeRenderer shapeR;
 	public SpriteBatch batch;
@@ -29,13 +30,14 @@ public class ContagionGame extends Game {
 		Timer.schedule(new Task() {
 			@Override
 			public void run() {
-				healthLevel-=10;
-				hungerLevel-=20;
+				healthLevel-=10;//Health disminuye por 10 
+				hungerLevel-=20; //Hunger disminuye por 20
 			}
-		}, 0, 600); //Cada 10 mins disminuye el hambre y la salud
+		}, 0, 300); //Cada 5 mins disminuye el hambre y la salud
 		
 		healthLevel+=10;
 		hungerLevel+=20;
+
 		
 		batch = new SpriteBatch();
 		shapeR = new ShapeRenderer();

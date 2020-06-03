@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.ContagionGame;
 
+import utils.ReadandWrite;
+
 public class MainMenuScreen implements Screen {
 
 	
@@ -52,6 +54,8 @@ public class MainMenuScreen implements Screen {
         backgroundTexture = new Texture("background.jpg");
         backgroundSprite =new Sprite(backgroundTexture);
 		logo = new Texture("contagion.png");
+		
+		
 	}
 
 	
@@ -110,10 +114,10 @@ public class MainMenuScreen implements Screen {
 				&& (game.HEIGHT - RESUME_BTN_Y - BTN_HEIGHT < Gdx.input.getY())) {
 			// Collision mouse with Play Button for hover
 			game.batch.draw(resumeButtonActive, BTN_X + 50, RESUME_BTN_Y, BTN_WIDTH - 40, BTN_HEIGHT);
-			
+			ReadandWrite.Load("archivo.txt", game);
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new MainGameScreen(game));//Changes to main menu screen
+				game.setScreen(new MainGameScreen2(game));//Changes to main menu screen
 			}
 			
 		} else {
@@ -128,10 +132,11 @@ public class MainMenuScreen implements Screen {
 				&& (game.HEIGHT - NEW_BTN_Y - BTN_HEIGHT < Gdx.input.getY())) {
 			// Collision mouse with Play Button for hover
 			game.batch.draw(newGameButtonActive, BTN_X + 50, NEW_BTN_Y, BTN_WIDTH - 40, BTN_HEIGHT);
-			
+			game.healthLevel=100;
+			game.hungerLevel=100;
 			//Collision mouse with Play Button for click
 			if(Gdx.input.isTouched()) { //If it clicks it
-				game.setScreen(new MainGameScreen(game));//Changes to main menu screen
+				game.setScreen(new MainGameScreen2(game));//Changes to main menu screen
 			}
 			
 		} else {

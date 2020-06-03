@@ -1,11 +1,14 @@
 package net.hollowbit.contagiongame.screens;
 
+import utils.ReadandWrite;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -34,8 +37,8 @@ public class MainGameScreen implements Screen {
 	private int PLAYER_Y = 200;
 	private int text =0;
 
-	ContagionGame game;
 
+	ContagionGame game;
 	
 	//BOTONES
 	Texture pauseButtonActive;
@@ -45,8 +48,13 @@ public class MainGameScreen implements Screen {
 	public static Texture door;
 	public static Sprite doorSprite;
 	
+	//Empty
+	public static Texture empty;
+	public static Sprite emptySprite;
+	
 	//LEVELS
 	public Texture levelContainer = new Texture("levelContainer.png");
+	public Texture Empty = new Texture("Empty.png");
 	public Texture healthIcon = new Texture("heart.png");
 	public Texture text1 = new Texture("text1.png");
 	public Texture text2 = new Texture("text2.png");
@@ -58,6 +66,8 @@ public class MainGameScreen implements Screen {
 	public Texture hungerIcon = new Texture("stomach.png");
 	public Texture hunger= new Texture("level.jpg");
 	public int hungerLevel;
+	public int money;
+	private BitmapFont font;
 	
 	// PLAYER
 	TextureRegion[] player;
@@ -84,13 +94,25 @@ public class MainGameScreen implements Screen {
 
 		this.door = new Texture("door.png");
 		doorSprite = new Sprite(door);
+		
+		this.empty = new Texture("Empty.png");
+		emptySprite = new Sprite(empty);
 		// backgroundTexture = new Texture("cuarto2.png");
 		backgroundTexture = new Texture("cuarto.jpg");
 		
 		healthLevel = game.healthLevel;
 		hungerLevel = game.hungerLevel;
+		money=game.money;
+
 				
 		backgroundSprite = new Sprite(backgroundTexture);
+		
+	     ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel);
+	     
+			// FONT
+			font = new BitmapFont();
+			font.setColor(Color.WHITE);
+			font.getData().setScale(1, 1);
 
 	}
 
@@ -124,6 +146,10 @@ public class MainGameScreen implements Screen {
 		doorSprite.setPosition(DOOR_X, DOOR_Y);
 		doorSprite.setSize(DOOR_WIDTH, DOOR_HEIGHT);
 		doorSprite.draw(game.batch);
+		
+		emptySprite.setPosition(800, 530);
+		emptySprite.setSize(200, 130);
+		emptySprite.draw(game.batch);
 
 		// Detecta click con el mouse en la puerta
 		imageCollision(DOOR_X, DOOR_Y, DOOR_WIDTH, DOOR_HEIGHT, new HallwayScreen(game));
@@ -139,12 +165,9 @@ public class MainGameScreen implements Screen {
 		game.batch.draw(hunger, 1000, game.HEIGHT - 105, hungerLevel, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 65, 100, 30);
 		game.batch.draw(levelContainer, 1000, game.HEIGHT - 105, 100, 30);
+		font.draw(game.batch, "Money: $"+money ,1000, game.HEIGHT - 125);
 		
-		if (text==0) {
-			game.batch.draw(text1,50, 0, game.WIDTH-100, 300);
-			game.batch.draw(next,game.WIDTH-130,130, 60, 60);
-		}
-		
+				
 		assignPlayerAnimations();
 		TextureRegion currentFrame = playerStanding.getKeyFrame(stateTime, true);
 
@@ -176,6 +199,9 @@ public class MainGameScreen implements Screen {
 
 		if (doorSprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
 			game.setScreen(new OutsideMainScreen(game)); // Va al pasillo
+		}
+		if (emptySprite.getBoundingRectangle().overlaps(playerRect)) { // Si hay una colision entre player y puerta
+			game.setScreen(new ComputerScreen(game)); // Va al pasillo
 		}
 		game.batch.end();
 	}
@@ -279,6 +305,21 @@ public class MainGameScreen implements Screen {
 			// Collision mouse with Play Button for click
 			if (Gdx.input.isTouched()) { // If it clicks it
 				game.setScreen(PauseScreen);// Changes to main menu screen
+			}
+
+		}
+	}
+	void imageCollision2(int GAMEO_BTN_X, int GAMEO_BTN_Y, int PLAY_BTN_WIDTH, int PLAY_BTN_HEIGHT) {
+		if (GAMEO_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (GAMEO_BTN_X + PLAY_BTN_WIDTH)
+				&& Gdx.input.getY() <= (game.HEIGHT - GAMEO_BTN_Y)
+				&& (game.HEIGHT - GAMEO_BTN_Y - PLAY_BTN_HEIGHT < Gdx.input.getY())) {
+			// Collision mouse with Play Button for hover
+			// game.batch.draw(gameOverButtonActive, GAMEO_BTN_X + 30, GAMEO_BTN_Y,
+			// PLAY_BTN_WIDTH-30, PLAY_BTN_HEIGHT);
+
+			// Collision mouse with Play Button for click
+			if (Gdx.input.isTouched()) { // If it clicks it
+				text++;// Changes to main menu screen
 			}
 
 		}

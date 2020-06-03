@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.ContagionGame;
@@ -23,11 +25,18 @@ public class HospitalGame implements Screen {
 	private static final int VIRUS_WIDTH=60;
 	private static final int VIRUS_HEIGHT=73;
 	private static final float VIRUS_SPEED=0.5f;
+	private static final int PAUSE_BTN_HEIGHT = 62;
+	private static final int PAUSE_BTN_WIDTH = 134;
+	private static final int PAUSE_BTN_X = 60;
+	private static final int PAUSE_BTN_Y = ContagionGame.HEIGHT - 70;
 
 	ContagionGame game;
-
+	
+	private boolean alive;
 	Texture logo;
 	TextureRegion[] virus;
+	Texture youloose;
+	Texture youwon;
 	private int counter = 0;
 	private int moveDown = 0;
 	Animation<TextureRegion> virusAnimation;
@@ -38,6 +47,11 @@ public class HospitalGame implements Screen {
     public static Texture backgroundTexture;
     public static Sprite backgroundSprite;
     float stateTime;
+	private BitmapFont font;
+	
+	//BOTONES
+	Texture pauseButtonActive;
+	Texture pauseButtonInactive;
     
     //Laser
 	public static Texture laser;
@@ -58,6 +72,10 @@ public class HospitalGame implements Screen {
 		this.game = game;
 		this.playButtonActive = new Texture("play_active.png");
 		this.playButtonInactive = new Texture("play_inactive.png");
+		this.pauseButtonActive = new Texture("goback_active.png");
+		this.pauseButtonInactive = new Texture("goback_inactive.png");
+		youloose = new Texture("youloose.png");
+		youwon = new Texture("youwon.png");
         backgroundTexture = new Texture("hospitalInside.png");
         backgroundSprite =new Sprite(backgroundTexture);
 		logo = new Texture("hospitalLogo.png");
@@ -68,6 +86,8 @@ public class HospitalGame implements Screen {
 		playerSprite.setSize(PLAYER_W, PLAYER_H);
 		laserSprite.setSize(10, 30);
 		laserSprite.setPosition(LASER_X, LASER_Y);
+		this.alive= true;
+		font = new BitmapFont();
 		
 		for(int i=0;i<4;i++) {
 			for(int j=0;j<5;j++) {
@@ -116,70 +136,102 @@ public class HospitalGame implements Screen {
 		game.batch.begin();
 		
 		renderBackground();
-		movement(playerSprite);
-		playerSprite.draw(game.batch);
-		playerSprite.setPosition(PLAYER_X, PLAYER_Y);
-		
-		movementLaser(laserSprite);
-		laserSprite.setPosition(LASER_X, LASER_Y);
-		laserSprite.draw(game.batch);
 		
 
-		/* 
-		 Gdx.input.getX() = mouse X coordinate
-		 Gdx.input.getY() = mouse Y coordinate
-		 */
-		
-		//Animation
-		assignAnimations();
-		
-		for (Sprite virus : virusSprites) {
-			virus.draw(game.batch); // Pinta el virus
-			counter++;
-			if(counter==200) {
-				if(moveDown ==0) {
-					moveDown=1;
-				}else {
-					moveDown=0;
+			movement(playerSprite);
+
+			
+			movementLaser(laserSprite);
+
+			
+
+			/* 
+			 Gdx.input.getX() = mouse X coordinate
+			 Gdx.input.getY() = mouse Y coordinate
+			 */
+			
+			//Animation
+			assignAnimations();
+			
+			//BUTTON GAME OVER
+			
+			game.batch.draw(pauseButtonInactive,PAUSE_BTN_X, PAUSE_BTN_Y, PAUSE_BTN_WIDTH, PAUSE_BTN_HEIGHT);
+			if (Gdx.input.isTouched()) {
+				if (PAUSE_BTN_X <= Gdx.input.getX() && Gdx.input.getX() <= (PAUSE_BTN_X + PAUSE_BTN_WIDTH)
+						&& Gdx.input.getY() <= (game.HEIGHT - PAUSE_BTN_Y)
+						&& (game.HEIGHT - PAUSE_BTN_Y - PAUSE_BTN_HEIGHT < Gdx.input.getY())) {
+						game.setScreen(new OutsideMainScreen(game));
+					}
+
 				}
-				counter=0;
-			}
-			if(direction ==0) {
-				virus.setPosition(virus.getX()+5, virus.getY()-moveDown);
-			}else {
-				virus.setPosition(virus.getX()-5, virus.getY()-moveDown);
-			}
-			 // Va cayendo a 7px
+			
+			if(alive&&0<virusSprites.size()) {
+				playerSprite.draw(game.batch);
+				playerSprite.setPosition(PLAYER_X, PLAYER_Y);
+				
+				laserSprite.setPosition(LASER_X, LASER_Y);
+				laserSprite.draw(game.batch);
+				
+			for (Sprite virus : virusSprites) {
+				virus.draw(game.batch); // Pinta el virus
+				counter++;
+				if(counter==200) {
+					if(moveDown ==0) {
+						moveDown=1;
+					}else {
+						moveDown=0;
+					}
+					counter=0;
+				}
+				if(direction ==0) {
+					virus.setPosition(virus.getX()+5, virus.getY()-moveDown);
+				}else {
+					virus.setPosition(virus.getX()-5, virus.getY()-moveDown);
+				}
+				 // Va cayendo a 7px
 
-			if (virus.getX() <= 0) {
-				// Si el virus toca el piso pierde una vida
-				direction =0;
-//				virusSprites.remove(virusSprites.indexOf(virus));
-//				break;
-			}
-			if (virus.getX() >= ContagionGame.WIDTH-50) {
-				// Si el virus toca el piso pierde una vida
-				direction =1;
-//				virusSprites.remove(virusSprites.indexOf(virus));
-//				break;
-			}
-			if (Gdx.input.isKeyPressed(Keys.UP)) {
-				LASER_X = PLAYER_X+50;
-				LASER_Y = PLAYER_H-30;
-			}
-			if (laserSprite.getBoundingRectangle().overlaps(virus.getBoundingRectangle())) {
-				// Si el cart toca la fruta gana score
-				virusSprites.remove(virusSprites.indexOf(virus));
-				LASER_X = -50;
-				LASER_Y = 0;
-				break;
+				if (virus.getX() <= 0) {
+					// Si el virus toca el piso pierde una vida
+					direction =0;
+//					virusSprites.remove(virusSprites.indexOf(virus));
+//					break;
+				}
+				if (virus.getX() >= ContagionGame.WIDTH-50) {
+					// Si el virus toca el piso pierde una vida
+					direction =1;
+//					virusSprites.remove(virusSprites.indexOf(virus));
+//					break;
+				}
+				if (Gdx.input.isKeyPressed(Keys.UP)) {
+					LASER_X = PLAYER_X+50;
+					LASER_Y = PLAYER_H-30;
+				}
+				if (laserSprite.getBoundingRectangle().overlaps(virus.getBoundingRectangle())) {
+					// Si el cart toca la fruta gana score
+					virusSprites.remove(virusSprites.indexOf(virus));
+					LASER_X = -50;
+					LASER_Y = 0;
+					break;
+				}
+				if (playerSprite.getBoundingRectangle().overlaps(virus.getBoundingRectangle())) {
+					// Si el cart toca la fruta gana score
+					alive=false;
+				}
+		}
+		} else if(!alive){
+			//YOU LOOSE
+			game.batch.draw(youloose, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
+					LOGO_HEIGHT);
+		}else {
+			//YOU WIN
+			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
+					LOGO_HEIGHT);
+			if(game.healthLevel<100) {
+				game.healthLevel+=10;
 			}
 			
-			if (playerSprite.getBoundingRectangle().overlaps(virus.getBoundingRectangle())) {
-				// Si el cart toca la fruta gana score
-				game.setScreen(new OutsideMainScreen(game));
 			}
-		}
+	
 		
 
 		game.batch.end();
