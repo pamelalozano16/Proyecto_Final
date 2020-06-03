@@ -107,7 +107,7 @@ public class MainGameScreen implements Screen {
 				
 		backgroundSprite = new Sprite(backgroundTexture);
 		
-	     ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel);
+	     ReadandWrite.Save("archivo.txt", game.healthLevel, game.hungerLevel, game.money);
 	     
 			// FONT
 			font = new BitmapFont();

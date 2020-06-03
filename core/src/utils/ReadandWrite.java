@@ -14,11 +14,11 @@ import java.io.IOException;
  */
 public class ReadandWrite {
 
-    public static void Save(String strFileName, int healthLevel, int hungerLevel) {
+    public static void Save(String strFileName, int healthLevel, int hungerLevel, int money) {
 
         try {
             PrintWriter writer = new PrintWriter(new FileWriter(strFileName));
-            writer.println("" + healthLevel + "/" + hungerLevel);
+            writer.println("" + healthLevel + "/" + hungerLevel + "/" + money);
             writer.close();
         } catch (IOException ioe) {
             System.out.println("File Not found CALL 911");
@@ -35,9 +35,11 @@ public class ReadandWrite {
             datos = line.split("/");
             int healthLevel = Integer.parseInt(datos[0]);
             int hungerLevel = Integer.parseInt(datos[1]);
+            int money = Integer.parseInt(datos[2]);
             
             game.healthLevel=healthLevel;
             game.hungerLevel=hungerLevel;
+            game.money=money;
             
             System.out.println("Se leyo  health = " + healthLevel + " y hunger = " + hungerLevel);
             reader.close();
