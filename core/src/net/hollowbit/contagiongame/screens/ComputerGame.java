@@ -59,32 +59,35 @@ public class ComputerGame implements Screen {
 			 "To keep yourself and others safe, you should:",
 			 "To properly wash your hands you should wash them for at least ____ seconds:",
 			 "You should use a sanitazier that has at least ____ percent alcohol",
-			 "Which of the following isnt an acceptable thing to do according to the social distancing guidelines",
-			 "Which people have higher chance to be at serious risk","Can you not present symtoms if you're infected",
+			 "Which of the following isnt social distancing guidelines",
+			 "Which people have higher chance to be at serious risk",
+			 "Can you not present symtoms if you're infected",
 			 "Do you need to wear a mask if you want to go outside even if you're healthy",
 			 "What is COVID-19 mortality rate in Mexico:",
 			 "Which was the first country to have 1 million people infected:",
 			 "Where was the first recorded case of COVID-19",
 			 "If you get infected can you recover?",
-			 "What is the biggest measure countries have taken in order to prevent the spread of COVID-19:",
+			 "What is the biggest measure prevent the spread of COVID-19:",
 			 "Is being infected a death sentece?",
 			 "What is the country with the biggest amount of confirmed cases:",
 			 "As of may 2020, a cure for COVID-19 has been found:",
 			 "If you're young and healthy you cant get infected"
 			 };
-	 String[][]repuestas= {{"Respiratory droplets that pass from person to person","Contact with infected animals","Food packaging and other contaminated surfaces","All of the above","0"},
+	 String[][]repuestas= {{"Respiratory droplets","Contact with infected animals","Food packaging","All of the above","0"},
 			 {"Shortness of breath","Excessive sweating","Headache","Bleeding","0"},
-			 {"Wash hands frequently","Clean and disenfect everything that is touched regularly","Avoid contact with people that are sick","All of the above","3"},
+			 {"Wash hands frequently","Clean and disenfect everything","Avoid contact with people ","All of the above","3"},
 			 {"30","20","40","10","1"},
 			 {"90","70","20","30","2"},
-			 {"Walking the dog","Delivering the groceries to a loved one","Going to a group meeting or event, as long as no one touches","visiting the doctor for something that doesn’t have to do with COVID-19","2"},
-			 {"Those with preexisting conditions like athsma","Adults 65 and older","Babies and young children, as long as no one touches","Both older adults and thos with preexisting conditions","3"},
+			 {"Walking the dog","Delivering the groceries","Going to a group meeting or event","visiting the doctor","2"},
+			 {"Those with preexisting conditions like athsma","Adults 65 and older","Babies and young children, as long as no one touches","Both adults and preexisting conditions","3"},
 			 {"Yes","No","","","0"},
 			 {"Yes","No","","","0"},
 			 {"30%","50%","1%","10%","3"},
 			 {"China","Russia","USA","India","2"},
 			 {"USA","China","Thailand","Spain","1"},
 			 {"Yes","No","","","0"},
+			 {"Antibacterial in every entrance","Closed down shopping malls","Social distancing/self-isolation","Cancelled all big events","2"},
+			 {"Yes","No","","","1"},
 			 {"China","Russia","Thailand","USA","3"},
 			 {"TRUE","False","","","1"},
 			 {"TRUE","False","","","1"},
@@ -154,7 +157,7 @@ public class ComputerGame implements Screen {
 		renderBackground();
 		
 		if(counter <6) {
-		game.batch.draw(mainWood, (game.WIDTH/2)-200, (game.HEIGHT/2)+100, 400, 200);
+		game.batch.draw(mainWood, (game.WIDTH/2)-300, (game.HEIGHT/2)+100, 600, 200);
 		
 		game.batch.draw(wood1, (game.WIDTH/2)-400, ((game.HEIGHT/2)-100)-100, 300, 150);
 		imageCollision2((game.WIDTH/2)-400, ((game.HEIGHT/2)-100)-100, 300, 150,"0");
@@ -178,7 +181,7 @@ public class ComputerGame implements Screen {
 			question=false;
 		}
 	
-		font.draw(game.batch, preguntas[questionNum],(600)-150, (350)+250);
+		font.draw(game.batch, preguntas[questionNum],(600)-220, (350)+250);
 		font.draw(game.batch, repuestas[questionNum][0] ,(650)-400, ((game.HEIGHT/2)-100));
 		font.draw(game.batch, repuestas[questionNum][1],(650)-400, ((game.HEIGHT/2)+50));
 		font.draw(game.batch, repuestas[questionNum][2] ,(650)+100, ((game.HEIGHT/2)-100));
@@ -225,7 +228,7 @@ public class ComputerGame implements Screen {
 	
 	int getNextQuestion() {
 		Random rand =new Random();
-		int randomNum = rand.nextInt(((15-0)+1)+0);
+		int randomNum = rand.nextInt(((17-0)+1)+0);
 		return randomNum;
 
 	}
