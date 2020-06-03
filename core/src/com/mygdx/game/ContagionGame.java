@@ -4,6 +4,7 @@ import utils.ReadandWrite;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -22,7 +23,15 @@ public class ContagionGame extends Game {
 	public int hungerLevel = 100;
 	public ShapeRenderer shapeR;
 	public SpriteBatch batch;
+	//SOUND
+	public Sound background_sound;
+	
 
+	public void playBackgroundSound() {
+		background_sound = Gdx.audio.newSound(Gdx.files.internal("sounds/Game-Menu.mp3"));
+		long bs = background_sound.play();
+		background_sound.setLooping(bs, true);
+	}
 	
 	@Override
 	public void create () {
@@ -42,6 +51,10 @@ public class ContagionGame extends Game {
 		batch = new SpriteBatch();
 		shapeR = new ShapeRenderer();
 		this.setScreen(new MainPlayScreen(this));
+		
+		//SOUNDS
+		playBackgroundSound();
+		
 	}
 
 	@Override

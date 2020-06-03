@@ -169,6 +169,7 @@ public class StoreGame implements Screen {
 		}, 0, virus_secs);
 
 		// SOUNDS
+		game.background_sound.dispose();
 		long bs = background_sound.play();
 		background_sound.setLooping(bs, true);
 
@@ -207,6 +208,7 @@ public class StoreGame implements Screen {
 					&& (game.HEIGHT - PAUSE_BTN_Y - PAUSE_BTN_HEIGHT < Gdx.input.getY())) {
 					game.setScreen(new OutsideMainScreen(game));
 					background_sound.dispose();
+					game.playBackgroundSound();
 				}
 
 			}
@@ -266,6 +268,7 @@ public class StoreGame implements Screen {
 					// Si el personaje toca el virus se acaba el juego
 					lives = 0;
 					background_sound.dispose();
+					game.playBackgroundSound();
 					break;
 				}
 				if (virus.getY() <= 0) {
@@ -281,6 +284,7 @@ public class StoreGame implements Screen {
 			game.batch.draw(youloose, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
 					LOGO_HEIGHT);
 			background_sound.dispose();
+			game.playBackgroundSound();
 		} else { 
 			//YOU WIN
 			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
@@ -289,6 +293,7 @@ public class StoreGame implements Screen {
 				game.hungerLevel+=20;
 			}
 			background_sound.dispose();
+			game.playBackgroundSound();
 		}
 
 		game.batch.end();
