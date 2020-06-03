@@ -284,7 +284,7 @@ public class StoreGame implements Screen {
 			game.batch.draw(youloose, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
 					LOGO_HEIGHT);
 			background_sound.dispose();
-			game.playBackgroundSound();
+
 		} else { 
 			//YOU WIN
 			game.batch.draw(youwon, (game.WIDTH / 2) - (LOGO_WIDTH / 2), game.HEIGHT - (LOGO_HEIGHT +100), LOGO_WIDTH,
@@ -293,7 +293,7 @@ public class StoreGame implements Screen {
 				game.hungerLevel+=20;
 			}
 			background_sound.dispose();
-			game.playBackgroundSound();
+
 		}
 
 		game.batch.end();
