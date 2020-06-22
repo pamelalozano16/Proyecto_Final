@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 import net.hollowbit.contagiongame.screens.MainGameScreen;
 import net.hollowbit.contagiongame.screens.MainPlayScreen;
+import net.hollowbit.contagiongame.screens.gameOverScreen;
 
 public class ContagionGame extends Game {
 	
@@ -51,6 +52,7 @@ public class ContagionGame extends Game {
 		batch = new SpriteBatch();
 		shapeR = new ShapeRenderer();
 		this.setScreen(new MainPlayScreen(this));
+
 		
 		//SOUNDS
 		playBackgroundSound();
@@ -60,6 +62,9 @@ public class ContagionGame extends Game {
 	@Override
 	public void render () {
 		super.render();
+		if(hungerLevel<=0||healthLevel<=0) {
+			this.setScreen(new MainPlayScreen(this));
+		}
 	}
 	
 	@Override
